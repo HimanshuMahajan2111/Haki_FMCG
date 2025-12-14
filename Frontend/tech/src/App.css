@@ -1,0 +1,211 @@
+:root {
+    --sidebar-width: 200px;
+    --dark-bg: #1e1e2d;
+    --sidebar-bg: #27293d;
+    --text-color: #f8f8f8;
+    --accent-color: #00bcd4;
+    --border-color: #3f4254;
+    --active-bg: #333650;
+    --disabled-bg: #494c63;
+    --disabled-text: #a9a9a9;
+    --dropzone-bg: #242636;
+}
+
+body {
+    margin: 0;
+    background-color: var(--dark-bg);
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text-color);
+    box-sizing: border-box;
+}
+
+.site-wrapper {
+    display: flex;
+    min-height: 100vh;
+    border: 5px solid var(--border-color);
+    background-color: var(--sidebar-bg);
+}
+
+.side-nav-bar {
+    width: var(--sidebar-width);
+    flex-shrink: 0;
+    background-color: var(--sidebar-bg);
+    border-right: 2px solid var(--border-color);
+    padding: 0;
+}
+
+.nav-logo {
+    padding: 20px 20px 20px 20px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.nav-logo span {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent-color);
+}
+
+.tab-links-container {
+    display: flex;
+    flex-direction: column;
+    padding-top: 0;
+}
+
+.side-tab-link {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #a9a9a9;
+    font-weight: 500;
+    font-size: 14px;
+    transition: background-color 0.1s ease;
+    border-left: 0;
+}
+
+.tab-icon {
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.side-tab-link.active {
+    color: var(--text-color);
+    background-color: var(--dark-bg);
+    border-right: 2px solid var(--dark-bg);
+    border-top: 2px solid var(--border-color);
+    border-bottom: 2px solid var(--border-color);
+    border-left: 0;
+    margin-right: -2px;
+    font-weight: 600;
+}
+
+.side-tab-link:hover:not(.active) {
+    background-color: #2c2f42;
+    color: var(--text-color);
+}
+
+.main-content-area {
+    flex-grow: 1;
+    padding: 0;
+    overflow-y: auto;
+}
+
+.top-content-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px 20px;
+    border-bottom: 2px solid var(--border-color);
+    background-color: var(--sidebar-bg);
+}
+
+.user-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.icon-button {
+    background-color: transparent;
+    color: var(--text-color);
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.tab-content-container {
+    background-color: var(--sidebar-bg);
+    padding: 30px;
+    min-height: calc(100vh - 45px - 5px);
+}
+
+.tab-content h3 {
+    font-size: 24px;
+    color: var(--text-color);
+    margin-bottom: 25px;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.upload-title {
+    color: var(--accent-color);
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.upload-drop-zone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 250px;
+    padding: 20px;
+    cursor: pointer;
+    border: 2px dashed var(--accent-color);
+    border-radius: 0;
+    background-color: var(--dropzone-bg);
+    color: var(--text-color);
+}
+
+.upload-drop-zone:hover {
+    background-color: var(--active-bg);
+}
+
+.upload-icon {
+    font-size: 30px;
+    color: #c0c0c0;
+    margin-bottom: 15px;
+}
+
+.selected-file-name {
+    color: var(--accent-color);
+    margin-top: 5px;
+    font-weight: 600;
+}
+
+.full-width-progress-bar-container {
+    width: 100%;
+    height: 8px;
+    background-color: var(--dropzone-bg);
+    border-radius: 0;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.full-width-progress-bar-fill {
+    height: 100%;
+    background-color: var(--accent-color);
+    transition: width 0.3s ease;
+}
+
+.upload-status {
+    font-size: 14px;
+    color: var(--text-color);
+    margin-top: 10px;
+}
+
+.file-input-wrapper input[type="file"] {
+    display: none;
+}
+
+.start-upload-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 500;
+    background-color: var(--accent-color);
+    color: var(--sidebar-bg);
+    margin-top: 20px;
+}
+
+.start-upload-button:disabled {
+    background-color: var(--disabled-bg);
+    color: var(--disabled-text);
+    cursor: not-allowed;
+}
+
+.start-upload-button:hover:not(:disabled) {
+    background-color: #00a4b3;
+}

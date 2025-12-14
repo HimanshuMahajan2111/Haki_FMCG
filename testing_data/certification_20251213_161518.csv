@@ -1,0 +1,6 @@
+﻿fee_type,cost,category,source,note
+ISI Mark Application Fee,5000,Initial,BIS,One-time application fee
+ISI Mark License Fee (Small Scale),25000,Annual,BIS,Annual license fee for small manufacturers
+ISI Mark License Fee (Medium Scale),50000,Annual,BIS,Annual license fee for medium manufacturers
+ISI Mark License Fee (Large Scale),100000,Annual,BIS,Annual license fee for large manufacturers
+Certification Inspection Visit,15000,Per Visit,BIS,Factory inspection charges

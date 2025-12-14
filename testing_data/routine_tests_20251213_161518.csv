@@ -1,0 +1,5 @@
+﻿test_name,test_code,cost,frequency,standard,category,source,location,lab
+Routine Test Package - Cables,ERDA-RT-001,12000,Per batch,IS 694,Routine Test,ERDA,"Vadodara, Gujarat",
+Routine Sampling & Testing,ERTL-RT-001,8500,Per batch,IS 694,Routine Test,ERTL,All locations,
+Routine Test Package - Basic,IND-RT-001,10000,Per batch,IS 694,Routine Test,Independent Labs,,Multiple
+Routine Test Package - Comprehensive,IND-RT-002,18000,Per batch,"IS 694, IS 1554",Routine Test,Independent Labs,,Multiple

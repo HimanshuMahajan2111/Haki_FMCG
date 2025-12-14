@@ -1,0 +1,5 @@
+﻿test_name,test_code,cost,duration_days,standard,lab,category,source
+RoHS Testing - Cables,TUV-ROHS-001,35000,5,EU RoHS Directive,TUV SUD,Special Test,TUV SUD South Asia
+Water Treeing Test - XLPE Cables,ADV-WT-001,85000,30,IEEE 48,Multiple,Special Test,Advanced Testing Labs
+Cyclic Load Test,ADV-CL-001,95000,20,IEC 60502,Multiple,Special Test,Advanced Testing Labs
+Long Duration Voltage Test,ADV-LDV-001,120000,180,IEC 60502,Multiple,Special Test,Advanced Testing Labs

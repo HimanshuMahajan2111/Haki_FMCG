@@ -1,0 +1,602 @@
+{
+  "Type_Tests": [
+    {
+      "lab_name": "Example NABL Accredited Electrical Testing Lab",
+      "test_name": "High Voltage Withstand Test",
+      "estimated_cost": 15000,
+      "price_range": "₹12,000 - ₹18,000",
+      "location": "To be updated from actual scraping",
+      "source": "NABL",
+      "note": "Estimated pricing - Contact lab for accurate quotation",
+      "category": "Type_Tests"
+    },
+    {
+      "lab_name": "Example NABL Accredited Electrical Testing Lab",
+      "test_name": "Insulation Resistance Test",
+      "estimated_cost": 8500,
+      "price_range": "₹7,000 - ₹10,000",
+      "location": "To be updated from actual scraping",
+      "source": "NABL",
+      "note": "Estimated pricing - Contact lab for accurate quotation",
+      "category": "Type_Tests"
+    },
+    {
+      "lab_name": "Example NABL Accredited Electrical Testing Lab",
+      "test_name": "Conductor Resistance Test",
+      "estimated_cost": 5000,
+      "price_range": "₹4,000 - ₹6,000",
+      "location": "To be updated from actual scraping",
+      "source": "NABL",
+      "note": "Estimated pricing - Contact lab for accurate quotation",
+      "category": "Type_Tests"
+    },
+    {
+      "lab_name": "Example NABL Accredited Electrical Testing Lab",
+      "test_name": "Flame Retardance Test",
+      "estimated_cost": 21500,
+      "price_range": "₹18,000 - ₹25,000",
+      "location": "To be updated from actual scraping",
+      "source": "NABL",
+      "note": "Estimated pricing - Contact lab for accurate quotation",
+      "category": "Type_Tests"
+    },
+    {
+      "lab_name": "Example NABL Accredited Electrical Testing Lab",
+      "test_name": "Short Circuit Test",
+      "estimated_cost": 50000,
+      "price_range": "₹40,000 - ₹60,000",
+      "location": "To be updated from actual scraping",
+      "source": "NABL",
+      "note": "Estimated pricing - Contact lab for accurate quotation",
+      "category": "Type_Tests"
+    },
+    {
+      "lab_name": "Example NABL Accredited Electrical Testing Lab",
+      "test_name": "Partial Discharge Test",
+      "estimated_cost": 50000,
+      "price_range": "₹45,000 - ₹55,000",
+      "location": "To be updated from actual scraping",
+      "source": "NABL",
+      "note": "Estimated pricing - Contact lab for accurate quotation",
+      "category": "Type_Tests"
+    },
+    {
+      "lab_name": "Example NABL Accredited Electrical Testing Lab",
+      "test_name": "Dielectric Test",
+      "estimated_cost": 12500,
+      "price_range": "₹10,000 - ₹15,000",
+      "location": "To be updated from actual scraping",
+      "source": "NABL",
+      "note": "Estimated pricing - Contact lab for accurate quotation",
+      "category": "Type_Tests"
+    },
+    {
+      "lab_name": "Example NABL Accredited Electrical Testing Lab",
+      "test_name": "Temperature Rise Test",
+      "estimated_cost": 25000,
+      "price_range": "₹20,000 - ₹30,000",
+      "location": "To be updated from actual scraping",
+      "source": "NABL",
+      "note": "Estimated pricing - Contact lab for accurate quotation",
+      "category": "Type_Tests"
+    },
+    {
+      "fee_type": "Type Testing - Cables (IS 694)",
+      "cost": 75000,
+      "category": "Type Test",
+      "source": "BIS",
+      "standard": "IS 694",
+      "note": "Complete type testing for PVC insulated cables"
+    },
+    {
+      "fee_type": "Type Testing - Flexible Cables (IS 694)",
+      "cost": 60000,
+      "category": "Type Test",
+      "source": "BIS",
+      "standard": "IS 694",
+      "note": "Type testing for flexible cables"
+    },
+    {
+      "fee_type": "Sample Testing - Routine",
+      "cost": 8000,
+      "category": "Routine Test",
+      "source": "BIS",
+      "note": "Per batch routine testing"
+    },
+    {
+      "fee_type": "Re-testing (after failure)",
+      "cost": 12000,
+      "category": "Re-test",
+      "source": "BIS",
+      "note": "Re-testing after initial failure"
+    },
+    {
+      "test_name": "Type Test - LT PVC Cables (IS 694)",
+      "test_code": "ERDA-TT-001",
+      "cost": 65000,
+      "duration_days": 5,
+      "standard": "IS 694",
+      "category": "Type Test",
+      "source": "ERDA",
+      "location": "Vadodara, Gujarat"
+    },
+    {
+      "test_name": "Type Test - XLPE Cables (IS 7098)",
+      "test_code": "ERDA-TT-002",
+      "cost": 85000,
+      "duration_days": 7,
+      "standard": "IS 7098",
+      "category": "Type Test",
+      "source": "ERDA",
+      "location": "Vadodara, Gujarat"
+    },
+    {
+      "test_name": "High Voltage Test - Up to 11kV",
+      "test_code": "ERDA-HV-001",
+      "cost": 18000,
+      "duration_days": 2,
+      "standard": "IEC 60502",
+      "category": "Type Test",
+      "source": "ERDA",
+      "location": "Vadodara, Gujarat"
+    },
+    {
+      "test_name": "High Voltage Test - Up to 33kV",
+      "test_code": "ERDA-HV-002",
+      "cost": 35000,
+      "duration_days": 3,
+      "standard": "IEC 60502",
+      "category": "Type Test",
+      "source": "ERDA",
+      "location": "Vadodara, Gujarat"
+    },
+    {
+      "test_name": "Partial Discharge Test",
+      "test_code": "ERDA-PD-001",
+      "cost": 45000,
+      "duration_days": 2,
+      "standard": "IEC 60885",
+      "category": "Type Test",
+      "source": "ERDA",
+      "location": "Vadodara, Gujarat"
+    },
+    {
+      "test_name": "Flame Retardance Test (Single Cable)",
+      "test_code": "ERDA-FR-001",
+      "cost": 22000,
+      "duration_days": 3,
+      "standard": "IEC 60332-1",
+      "category": "Type Test",
+      "source": "ERDA",
+      "location": "Vadodara, Gujarat"
+    },
+    {
+      "test_name": "Flame Retardance Test (Bunch)",
+      "test_code": "ERDA-FR-002",
+      "cost": 35000,
+      "duration_days": 4,
+      "standard": "IEC 60332-3",
+      "category": "Type Test",
+      "source": "ERDA",
+      "location": "Vadodara, Gujarat"
+    },
+    {
+      "test_name": "Smoke Density Test",
+      "test_code": "ERDA-SM-001",
+      "cost": 28000,
+      "duration_days": 2,
+      "standard": "IEC 61034",
+      "category": "Type Test",
+      "source": "ERDA",
+      "location": "Vadodara, Gujarat"
+    },
+    {
+      "test_name": "Third Party Inspection",
+      "test_code": "ERDA-TPI-001",
+      "cost": 18000,
+      "frequency": "Per visit",
+      "standard": "As per specification",
+      "category": "Acceptance Test",
+      "source": "ERDA",
+      "location": "Vadodara, Gujarat"
+    },
+    {
+      "test_name": "Cable Type Approval - LT Cables",
+      "test_code": "ERTL-MUM-001",
+      "cost": 55000,
+      "duration_days": 7,
+      "standard": "IS 694, IS 1554",
+      "category": "Type Test",
+      "source": "ERTL",
+      "location": "Mumbai"
+    },
+    {
+      "test_name": "High Voltage Impulse Test",
+      "test_code": "ERTL-MUM-002",
+      "cost": 25000,
+      "duration_days": 2,
+      "standard": "IEC 60060",
+      "category": "Type Test",
+      "source": "ERTL",
+      "location": "Mumbai"
+    },
+    {
+      "test_name": "Conductor DC Resistance",
+      "test_code": "ERTL-MUM-003",
+      "cost": 4500,
+      "duration_days": 1,
+      "standard": "IS 694",
+      "category": "Type Test",
+      "source": "ERTL",
+      "location": "Mumbai"
+    },
+    {
+      "test_name": "Insulation Resistance (500V)",
+      "test_code": "ERTL-MUM-004",
+      "cost": 6000,
+      "duration_days": 1,
+      "standard": "IS 694",
+      "category": "Type Test",
+      "source": "ERTL",
+      "location": "Mumbai"
+    },
+    {
+      "test_name": "Cable Type Approval - HT Cables",
+      "test_code": "ERTL-DEL-001",
+      "cost": 95000,
+      "duration_days": 10,
+      "standard": "IS 7098, IEC 60502",
+      "category": "Type Test",
+      "source": "ERTL",
+      "location": "Delhi/Noida"
+    },
+    {
+      "test_name": "Mechanical Tests - Cables",
+      "test_code": "ERTL-DEL-003",
+      "cost": 15000,
+      "duration_days": 2,
+      "standard": "IS 694",
+      "category": "Type Test",
+      "source": "ERTL",
+      "location": "Delhi/Noida"
+    },
+    {
+      "test_name": "Fire Performance Test - Cables",
+      "test_code": "ERTL-CHE-001",
+      "cost": 40000,
+      "duration_days": 4,
+      "standard": "IEC 60332",
+      "category": "Type Test",
+      "source": "ERTL",
+      "location": "Chennai"
+    },
+    {
+      "test_name": "Halogen Content Test",
+      "test_code": "ERTL-CHE-002",
+      "cost": 18000,
+      "duration_days": 3,
+      "standard": "IEC 60754",
+      "category": "Type Test",
+      "source": "ERTL",
+      "location": "Chennai"
+    },
+    {
+      "test_name": "Corrosive Gas Emission Test",
+      "test_code": "ERTL-CHE-003",
+      "cost": 22000,
+      "duration_days": 3,
+      "standard": "IEC 60754",
+      "category": "Type Test",
+      "source": "ERTL",
+      "location": "Chennai"
+    },
+    {
+      "test_name": "Tensile Test - Cable Insulation",
+      "test_code": "ERTL-KOL-001",
+      "cost": 8000,
+      "duration_days": 2,
+      "standard": "IS 694",
+      "category": "Type Test",
+      "source": "ERTL",
+      "location": "Kolkata"
+    },
+    {
+      "test_name": "Hot Set Test - Cable Insulation",
+      "test_code": "ERTL-KOL-002",
+      "cost": 12000,
+      "duration_days": 2,
+      "standard": "IS 694",
+      "category": "Type Test",
+      "source": "ERTL",
+      "location": "Kolkata"
+    },
+    {
+      "test_name": "Type Test Complete - LT Cable",
+      "test_code": "TUV-TT-001",
+      "cost": 75000,
+      "duration_days": 7,
+      "standard": "IS 694, IEC 60227",
+      "lab": "TUV SUD",
+      "category": "Type Test",
+      "source": "TUV SUD South Asia"
+    },
+    {
+      "test_name": "CE Marking Support - Cables",
+      "test_code": "TUV-CE-001",
+      "cost": 125000,
+      "duration_days": 14,
+      "standard": "EN 50575 (CPR)",
+      "lab": "TUV SUD",
+      "category": "Certification",
+      "source": "TUV SUD South Asia"
+    },
+    {
+      "test_name": "Type Test - Power Cables",
+      "test_code": "ITK-TT-001",
+      "cost": 80000,
+      "duration_days": 8,
+      "standard": "IS 1554, IEC 60502",
+      "lab": "Intertek",
+      "category": "Type Test",
+      "source": "Intertek India"
+    },
+    {
+      "test_name": "UL Certification Support",
+      "test_code": "ITK-UL-001",
+      "cost": 150000,
+      "duration_days": 21,
+      "standard": "UL 44, UL 83",
+      "lab": "Intertek",
+      "category": "Certification",
+      "source": "Intertek India"
+    },
+    {
+      "test_name": "Fire Test - Vertical Tray",
+      "test_code": "ITK-FR-001",
+      "cost": 45000,
+      "duration_days": 4,
+      "standard": "IEC 60332-3",
+      "lab": "Intertek",
+      "category": "Type Test",
+      "source": "Intertek India"
+    },
+    {
+      "test_name": "Type Test Package - Flexible Cables",
+      "test_code": "SGS-TT-001",
+      "cost": 60000,
+      "duration_days": 6,
+      "standard": "IS 694, IEC 60227",
+      "lab": "SGS",
+      "category": "Type Test",
+      "source": "SGS India"
+    },
+    {
+      "test_name": "Heat Deformation Test",
+      "test_code": "SGS-HD-001",
+      "cost": 15000,
+      "duration_days": 2,
+      "standard": "IEC 60811",
+      "lab": "SGS",
+      "category": "Type Test",
+      "source": "SGS India"
+    },
+    {
+      "test_name": "Cold Bend Test",
+      "test_code": "SGS-CB-001",
+      "cost": 12000,
+      "duration_days": 2,
+      "standard": "IEC 60811",
+      "lab": "SGS",
+      "category": "Type Test",
+      "source": "SGS India"
+    }
+  ],
+  "Routine_Tests": [
+    {
+      "test_name": "Routine Test Package - Cables",
+      "test_code": "ERDA-RT-001",
+      "cost": 12000,
+      "frequency": "Per batch",
+      "standard": "IS 694",
+      "category": "Routine Test",
+      "source": "ERDA",
+      "location": "Vadodara, Gujarat"
+    },
+    {
+      "test_name": "Routine Sampling & Testing",
+      "test_code": "ERTL-RT-001",
+      "cost": 8500,
+      "frequency": "Per batch",
+      "standard": "IS 694",
+      "category": "Routine Test",
+      "source": "ERTL",
+      "location": "All locations"
+    },
+    {
+      "test_name": "Routine Test Package - Basic",
+      "test_code": "IND-RT-001",
+      "cost": 10000,
+      "frequency": "Per batch",
+      "standard": "IS 694",
+      "lab": "Multiple",
+      "category": "Routine Test",
+      "source": "Independent Labs"
+    },
+    {
+      "test_name": "Routine Test Package - Comprehensive",
+      "test_code": "IND-RT-002",
+      "cost": 18000,
+      "frequency": "Per batch",
+      "standard": "IS 694, IS 1554",
+      "lab": "Multiple",
+      "category": "Routine Test",
+      "source": "Independent Labs"
+    }
+  ],
+  "Acceptance_Tests": [],
+  "Certification": [
+    {
+      "fee_type": "ISI Mark Application Fee",
+      "cost": 5000,
+      "category": "Initial",
+      "source": "BIS",
+      "note": "One-time application fee"
+    },
+    {
+      "fee_type": "ISI Mark License Fee (Small Scale)",
+      "cost": 25000,
+      "category": "Annual",
+      "source": "BIS",
+      "note": "Annual license fee for small manufacturers"
+    },
+    {
+      "fee_type": "ISI Mark License Fee (Medium Scale)",
+      "cost": 50000,
+      "category": "Annual",
+      "source": "BIS",
+      "note": "Annual license fee for medium manufacturers"
+    },
+    {
+      "fee_type": "ISI Mark License Fee (Large Scale)",
+      "cost": 100000,
+      "category": "Annual",
+      "source": "BIS",
+      "note": "Annual license fee for large manufacturers"
+    },
+    {
+      "fee_type": "Certification Inspection Visit",
+      "cost": 15000,
+      "category": "Per Visit",
+      "source": "BIS",
+      "note": "Factory inspection charges"
+    }
+  ],
+  "Laboratories": [
+    {
+      "lab_name": "Example NABL Accredited Electrical Testing Lab",
+      "location": "To be updated from actual scraping",
+      "scope": "Electrical Testing for Cables and Wires",
+      "source": "NABL",
+      "note": "Update with actual data from NABL website"
+    },
+    {
+      "lab_name": "TUV SUD South Asia",
+      "location": "Multiple locations (Mumbai, Bangalore, Chennai)",
+      "accreditation": "NABL, International",
+      "scope": "Cable testing, Type approval, CE marking",
+      "website": "www.tuvsud.com/en-in",
+      "contact": "india@tuvsud.com",
+      "specialization": "International standards testing"
+    },
+    {
+      "lab_name": "Intertek India",
+      "location": "Mumbai, Bangalore, Delhi",
+      "accreditation": "NABL, International",
+      "scope": "Cable testing, Product certification",
+      "website": "www.intertek.com/india",
+      "contact": "india.info@intertek.com",
+      "specialization": "Global market compliance"
+    },
+    {
+      "lab_name": "SGS India",
+      "location": "Pan India presence",
+      "accreditation": "NABL, International",
+      "scope": "Comprehensive cable testing",
+      "website": "www.sgs.com/en-in",
+      "contact": "in.info@sgs.com",
+      "specialization": "Quality assurance"
+    },
+    {
+      "lab_name": "Cosmos Cables Testing Lab",
+      "location": "Faridabad, Haryana",
+      "accreditation": "NABL",
+      "scope": "In-house and third-party cable testing",
+      "website": "www.cosmoscables.com",
+      "contact": "info@cosmoscables.com",
+      "specialization": "Cable manufacturer with testing facility"
+    },
+    {
+      "lab_name": "Cabcon India Testing Laboratory",
+      "location": "Alwar, Rajasthan",
+      "accreditation": "NABL",
+      "scope": "LT/HT cable testing",
+      "website": "www.cabconindia.in",
+      "contact": "testing@cabconindia.in",
+      "specialization": "Power cables testing"
+    }
+  ],
+  "Standards": [
+    {
+      "standard_code": "IS 694",
+      "standard_name": "PVC insulated cables",
+      "applicable_to": "Power cables, control cables",
+      "source": "BIS"
+    },
+    {
+      "standard_code": "IS 1554",
+      "standard_name": "XLPE insulated cables",
+      "applicable_to": "Power cables",
+      "source": "BIS"
+    },
+    {
+      "standard_code": "IS 7098",
+      "standard_name": "Cables for working voltages up to and including 1100V",
+      "applicable_to": "Low voltage cables",
+      "source": "BIS"
+    }
+  ],
+  "EMI_EMC_Tests": [
+    {
+      "test_name": "EMI/EMC Testing - Cables",
+      "test_code": "ERTL-DEL-002",
+      "cost": 35000,
+      "duration_days": 3,
+      "standard": "IEC 61000",
+      "category": "EMI/EMC Test",
+      "source": "ERTL",
+      "location": "Delhi/Noida"
+    }
+  ],
+  "Special_Tests": [
+    {
+      "test_name": "RoHS Testing - Cables",
+      "test_code": "TUV-ROHS-001",
+      "cost": 35000,
+      "duration_days": 5,
+      "standard": "EU RoHS Directive",
+      "lab": "TUV SUD",
+      "category": "Special Test",
+      "source": "TUV SUD South Asia"
+    },
+    {
+      "test_name": "Water Treeing Test - XLPE Cables",
+      "test_code": "ADV-WT-001",
+      "cost": 85000,
+      "duration_days": 30,
+      "standard": "IEEE 48",
+      "lab": "Multiple",
+      "category": "Special Test",
+      "source": "Advanced Testing Labs"
+    },
+    {
+      "test_name": "Cyclic Load Test",
+      "test_code": "ADV-CL-001",
+      "cost": 95000,
+      "duration_days": 20,
+      "standard": "IEC 60502",
+      "lab": "Multiple",
+      "category": "Special Test",
+      "source": "Advanced Testing Labs"
+    },
+    {
+      "test_name": "Long Duration Voltage Test",
+      "test_code": "ADV-LDV-001",
+      "cost": 120000,
+      "duration_days": 180,
+      "standard": "IEC 60502",
+      "lab": "Multiple",
+      "category": "Special Test",
+      "source": "Advanced Testing Labs"
+    }
+  ]
+}

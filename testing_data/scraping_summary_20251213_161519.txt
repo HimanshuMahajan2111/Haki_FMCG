@@ -1,0 +1,37 @@
+======================================================================
+CABLE TESTING DATA SCRAPING SUMMARY
+======================================================================
+
+Scraping Date: 2025-12-13 16:15:19
+
+DATA SOURCES:
+----------------------------------------------------------------------
+1. CPRI (Central Power Research Institute): https://cpri.in
+2. NABL (National Accreditation Board): https://www.nabl-india.org
+3. BIS (Bureau of Indian Standards): https://bis.gov.in
+4. ERDA (Electrical Research & Development Assoc.): https://www.erda.in
+5. ERTL (Electrical & Electronics Regional Test Lab): https://www.ertl.gov.in
+6. TUV SUD South Asia: https://www.tuvsud.com/en-in
+7. Intertek India: https://www.intertek.com/india
+8. SGS India: https://www.sgs.com/en-in
+
+DATA SUMMARY:
+----------------------------------------------------------------------
+Type_Tests               :    40 items
+Routine_Tests            :     4 items
+Acceptance_Tests         :     0 items
+Certification            :     5 items
+Laboratories             :     6 items
+Standards                :     3 items
+EMI_EMC_Tests            :     1 items
+Special_Tests            :     4 items
+----------------------------------------------------------------------
+TOTAL                    :    63 items
+
+OUTPUT FILES:
+----------------------------------------------------------------------
+CSV files: scraped_data/[category]_20251213_161519.csv
+Excel file: scraped_data/cable_testing_data_20251213_161519.xlsx
+JSON file: scraped_data/cable_testing_data_20251213_161519.json
+
+======================================================================
