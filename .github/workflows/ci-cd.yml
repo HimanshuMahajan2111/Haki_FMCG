@@ -1,0 +1,278 @@
+# GitHub Actions CI/CD Pipeline
+# Automated testing, linting, and deployment for Haki FMCG RFP System
+
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop, feature/* ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+env:
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  # Job 1: Linting and Code Quality
+  lint:
+    name: Lint & Code Quality
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        cache: 'pip'
+    
+    - name: Install dependencies
+      run: |
+        cd backend
+        pip install --upgrade pip
+        pip install -r requirements-dev.txt
+    
+    - name: Run flake8
+      run: |
+        cd backend
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+      continue-on-error: true
+    
+    - name: Run black (check only)
+      run: |
+        cd backend
+        black --check --diff .
+      continue-on-error: true
+    
+    - name: Run isort (check only)
+      run: |
+        cd backend
+        isort --check-only --diff .
+      continue-on-error: true
+
+  # Job 2: Unit Tests
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    needs: lint
+    
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+        cache: 'pip'
+    
+    - name: Install dependencies
+      run: |
+        cd backend
+        pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install -r requirements-test.txt
+    
+    - name: Run pytest
+      env:
+        PYTHONPATH: ${{ github.workspace }}/backend
+      run: |
+        cd backend
+        pytest tests/ -v --tb=short --color=yes \
+          --cov=. \
+          --cov-report=xml \
+          --cov-report=html \
+          --cov-report=term-missing \
+          --junitxml=test-results.xml
+    
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v4
+      with:
+        file: ./backend/coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+    
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results-${{ matrix.python-version }}
+        path: backend/test-results.xml
+    
+    - name: Upload coverage report
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: coverage-report-${{ matrix.python-version }}
+        path: backend/htmlcov/
+
+  # Job 3: Integration Tests
+  integration:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    needs: test
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        cache: 'pip'
+    
+    - name: Install dependencies
+      run: |
+        cd backend
+        pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install -r requirements-test.txt
+    
+    - name: Run integration tests
+      env:
+        PYTHONPATH: ${{ github.workspace }}/backend
+      run: |
+        cd backend
+        pytest tests/ -v -m "integration" --tb=short
+      continue-on-error: true
+
+  # Job 4: Security Scan
+  security:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    needs: lint
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    
+    - name: Install dependencies
+      run: |
+        pip install safety bandit
+    
+    - name: Run Safety (dependency check)
+      run: |
+        cd backend
+        safety check --file requirements.txt --output json
+      continue-on-error: true
+    
+    - name: Run Bandit (security issues)
+      run: |
+        cd backend
+        bandit -r . -ll -f json -o bandit-report.json
+      continue-on-error: true
+    
+    - name: Upload security reports
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: security-reports
+        path: backend/*-report.json
+
+  # Job 5: Build Documentation
+  docs:
+    name: Build Documentation
+    runs-on: ubuntu-latest
+    needs: test
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    
+    - name: Install dependencies
+      run: |
+        pip install sphinx sphinx-rtd-theme
+    
+    - name: Build docs
+      run: |
+        echo "Documentation build step - configure Sphinx if needed"
+      continue-on-error: true
+
+  # Job 6: Docker Build (if applicable)
+  docker:
+    name: Docker Build
+    runs-on: ubuntu-latest
+    needs: [test, integration]
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    
+    - name: Build Docker image
+      run: |
+        echo "Docker build step - add Dockerfile when ready"
+      continue-on-error: true
+
+  # Job 7: Deploy to Staging (on develop branch)
+  deploy-staging:
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+    needs: [test, integration, security]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+    environment:
+      name: staging
+      url: https://staging.hakifmcg.com
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Deploy to staging
+      run: |
+        echo "Staging deployment step - configure when infrastructure is ready"
+      continue-on-error: true
+
+  # Job 8: Deploy to Production (on main branch)
+  deploy-production:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: [test, integration, security]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    environment:
+      name: production
+      url: https://hakifmcg.com
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Deploy to production
+      run: |
+        echo "Production deployment step - configure when infrastructure is ready"
+      continue-on-error: true
+
+  # Job 9: Notification
+  notify:
+    name: Notify Results
+    runs-on: ubuntu-latest
+    needs: [lint, test, integration, security]
+    if: always()
+    
+    steps:
+    - name: Send notification
+      run: |
+        echo "Pipeline completed. Configure notifications (Slack, Email, etc.) as needed."

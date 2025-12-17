@@ -1,0 +1,94 @@
+# Coverage.py configuration file
+# For measuring Python code coverage during testing
+
+[run]
+# Source paths to measure
+source = .
+
+# Omit these paths from coverage
+omit =
+    */tests/*
+    */test_*.py
+    */__pycache__/*
+    */venv/*
+    */.venv/*
+    */site-packages/*
+    */dist-packages/*
+    */migrations/*
+    */config/*
+    setup.py
+    conftest.py
+
+# Run with branch coverage
+branch = True
+
+# Concurrency support
+concurrency = thread,multiprocessing
+
+[report]
+# Show missing lines
+show_missing = True
+
+# Precision for coverage percentage
+precision = 2
+
+# Skip covered files
+skip_covered = False
+
+# Skip empty files
+skip_empty = True
+
+# Fail if coverage is below threshold
+fail_under = 80
+
+# Exclude lines from coverage
+exclude_lines =
+    # Standard pragma
+    pragma: no cover
+    
+    # Don't complain about missing debug code
+    def __repr__
+    def __str__
+    
+    # Don't complain if tests don't hit defensive assertion code
+    raise AssertionError
+    raise NotImplementedError
+    
+    # Don't complain if non-runnable code isn't run
+    if __name__ == "__main__":
+    if TYPE_CHECKING:
+    if typing.TYPE_CHECKING:
+    
+    # Don't complain about abstract methods
+    @abstractmethod
+    @abc.abstractmethod
+    
+    # Don't complain about overload definitions
+    @overload
+    
+    # Don't complain about ellipsis in stubs
+    \.\.\.
+
+[html]
+# Directory for HTML coverage report
+directory = htmlcov
+
+# Title for HTML report
+title = Haki FMCG RFP System Coverage Report
+
+[xml]
+# Output file for XML coverage report (for CI/CD)
+output = coverage.xml
+
+[json]
+# Output file for JSON coverage report
+output = coverage.json
+
+# Pretty print JSON
+pretty_print = True
+
+[paths]
+# Map different file paths to canonical names
+source =
+    backend/
+    */backend/

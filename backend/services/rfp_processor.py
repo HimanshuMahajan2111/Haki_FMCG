@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
 from db.models import RFP, RFPStatus
-from agents.orchestrator import AgentOrchestrator
+from agents.orchestrator_agent.orchestrator import AgentOrchestrator
 
 logger = structlog.get_logger()
 

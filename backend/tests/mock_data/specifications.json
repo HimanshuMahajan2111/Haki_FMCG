@@ -1,0 +1,55 @@
+{
+  "cable_specifications": [
+    {
+      "voltage": "1100V",
+      "current": "16A",
+      "conductor_size": "1.5 sq mm",
+      "conductor_material": "Copper",
+      "insulation_type": "PVC",
+      "standards": "IS 694",
+      "test_voltage": "3500V",
+      "max_temperature": "70°C"
+    },
+    {
+      "voltage": "1.1kV",
+      "current": "40A",
+      "conductor_size": "10 sq mm",
+      "conductor_material": "Aluminum",
+      "insulation_type": "XLPE",
+      "standards": "IS 1554",
+      "test_voltage": "4kV",
+      "max_temperature": "90°C"
+    }
+  ],
+  "switchgear_specifications": [
+    {
+      "voltage": "230V",
+      "current": "32A",
+      "poles": "4P",
+      "curve_type": "C",
+      "breaking_capacity": "6kA",
+      "standards": "IS 8828, IEC 60898",
+      "rated_frequency": "50Hz"
+    },
+    {
+      "voltage": "415V",
+      "current": "63A",
+      "poles": "3P",
+      "type": "MCCB",
+      "breaking_capacity": "25kA",
+      "standards": "IEC 60947"
+    }
+  ],
+  "motor_specifications": [
+    {
+      "voltage": "415V",
+      "power": "5HP",
+      "frequency": "50Hz",
+      "rpm": "1440",
+      "efficiency": "IE3",
+      "poles": "4",
+      "standards": "IS 12615",
+      "rated_current": "7.5A"
+    }
+  ]
+}

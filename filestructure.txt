@@ -1,3 +1,6 @@
+|-- .github
+    |-- workflows
+        |-- ci-cd.yml
 |-- .gitignore
 |-- .venv
     |-- .gitignore
@@ -1002,82 +1005,644 @@
         |-- python.exe
         |-- pythonw.exe
 |-- backend
+    |-- .coveragerc
     |-- .env
     |-- .env.example
     |-- .gitignore
+    |-- .pytest_cache
+        |-- .gitignore
+        |-- CACHEDIR.TAG
+        |-- README.md
+        |-- v
     |-- agents
         |-- base_agent.py
-        |-- orchestrator.py
-        |-- pricing_agent.py
-        |-- technical_agent.py
+        |-- communication
+            |-- communication_manager.py
+            |-- message_broker.py
+            |-- monitoring.py
+            |-- retry_handler.py
+            |-- state_manager.py
+            |-- test_communication.py
+            |-- verify_features.py
+            |-- verify_features_ascii.py
+            |-- __init__.py
+            |-- __pycache__
+                |-- communication_manager.cpython-313.pyc
+                |-- message_broker.cpython-313.pyc
+                |-- monitoring.cpython-313.pyc
+                |-- retry_handler.cpython-313.pyc
+                |-- state_manager.cpython-313.pyc
+                |-- test_communication.cpython-313-pytest-9.0.2.pyc
+                |-- __init__.cpython-313.pyc
+        |-- data
+            |-- agent_state
+        |-- data_loader.py
+        |-- master_agent.py
+        |-- mock_procurement_sites.py
+        |-- orchestrator
+            |-- agent_registry.py
+            |-- audit_trail.py
+            |-- communication_protocol.py
+            |-- context_summarization.py
+            |-- demo_outputs
+                |-- RESP-20251216-023001_20251216_023001.xlsx
+            |-- enhanced_orchestrator.py
+            |-- inter_agent_communication.py
+            |-- main_orchestrator.py
+            |-- message_queue.py
+            |-- pdf_generator.py
+            |-- quality_validation.py
+            |-- retry_handler.py
+            |-- state_manager.py
+            |-- test_orchestration_system.py
+            |-- test_orchestrator.py
+            |-- test_outputs
+                |-- RESP-20251216-022804_20251216_022804.xlsx
+            |-- __init__.py
+            |-- __pycache__
+                |-- agent_registry.cpython-313.pyc
+                |-- audit_trail.cpython-313.pyc
+                |-- communication_protocol.cpython-313.pyc
+                |-- context_summarization.cpython-313.pyc
+                |-- enhanced_orchestrator.cpython-313.pyc
+                |-- inter_agent_communication.cpython-313.pyc
+                |-- main_orchestrator.cpython-313.pyc
+                |-- message_queue.cpython-313.pyc
+                |-- pdf_generator.cpython-313.pyc
+                |-- quality_validation.cpython-313.pyc
+                |-- retry_handler.cpython-313.pyc
+                |-- state_manager.cpython-313.pyc
+                |-- __init__.cpython-313.pyc
+        |-- orchestrator_agent
+            |-- orchestrator.py
+            |-- __init__.py
+            |-- __pycache__
+                |-- orchestrator.cpython-313.pyc
+                |-- __init__.cpython-313.pyc
+        |-- orchestrator_agent_BACKUP_20251216_150957
+            |-- orchestrator.py
+            |-- __init__.py
+        |-- outputs
+        |-- output_generator.py
+        |-- pricing_agent
+            |-- advanced_features.py
+            |-- enhanced_pricing_agent.py
+            |-- outputs
+                |-- BID-20251216-EXPORT-TEST-001_20251216_015233.xlsx
+            |-- pricing_agent.py
+            |-- test_advanced_features.py
+            |-- test_all_features.py
+            |-- test_outputs
+                |-- BID-20251216-TEST_20251216_021155.xlsx
+                |-- BID-20251216-TEST_20251216_022404.xlsx
+                |-- complete_demo
+                    |-- BID-20251216-GOV-RFP-2024-RAIL-041_20251216_022134.xlsx
+            |-- __init__.py
+            |-- __pycache__
+                |-- advanced_features.cpython-313.pyc
+                |-- enhanced_pricing_agent.cpython-313.pyc
+                |-- pricing_agent.cpython-313.pyc
+                |-- __init__.cpython-313.pyc
+        |-- pricing_agent_worker.py
+        |-- product_repository.py
+        |-- sales_agent
+            |-- alerting.py
+            |-- config_reloader.py
+            |-- dashboard.py
+            |-- health_api.py
+            |-- relevance_filter.py
+            |-- rfp_scraper.py
+            |-- rfp_summarizer.py
+            |-- sales_agent.py
+            |-- scheduler.py
+            |-- state_manager.py
+            |-- test_all_features.py
+            |-- url_monitor.py
+            |-- url_monitor_v2.py
+            |-- workflow_trigger.py
+            |-- __init__.py
+        |-- sales_agent_worker.py
+        |-- simple_product_matcher.py
+        |-- technical_agent
+            |-- api_interface.py
+            |-- config.py
+            |-- enhanced_technical_agent.py
+            |-- llm_integration.py
+            |-- memory
+                |-- conversation_history.json
+                |-- long_term_memory.pkl
+            |-- memory_system.py
+            |-- metrics
+            |-- mock_implementations.py
+            |-- monitoring.py
+            |-- outputs
+                |-- comparison_RFP-2024-001_20251216_010910.xlsx
+                |-- comparison_RFP-2024-001_20251216_011934.xlsx
+            |-- scope_analyzer.py
+            |-- setup_api_key.ps1
+            |-- technical_agent.py
+            |-- technical_agent_old.py
+            |-- test_real_llm.py
+            |-- test_technical_agent.py
+            |-- vector_search.py
+            |-- __init__.py
+            |-- __pycache__
+                |-- config.cpython-313.pyc
+                |-- llm_integration.cpython-313.pyc
+                |-- memory_system.cpython-313.pyc
+                |-- mock_implementations.cpython-313.pyc
+                |-- monitoring.cpython-313.pyc
+                |-- scope_analyzer.cpython-313.pyc
+                |-- technical_agent.cpython-313.pyc
+                |-- vector_search.cpython-313.pyc
+                |-- __init__.cpython-313.pyc
+        |-- technical_agent_worker.py
+        |-- website_scanner.py
+        |-- web_scrapers.py
         |-- __init__.py
         |-- __pycache__
+            |-- alerting.cpython-313.pyc
             |-- base_agent.cpython-313.pyc
+            |-- config_reloader.cpython-313.pyc
+            |-- dashboard.cpython-313.pyc
+            |-- data_loader.cpython-313.pyc
+            |-- health_api.cpython-313.pyc
+            |-- master_agent.cpython-313.pyc
+            |-- mock_procurement_sites.cpython-313.pyc
             |-- orchestrator.cpython-313.pyc
+            |-- output_generator.cpython-313.pyc
             |-- pricing_agent.cpython-313.pyc
+            |-- pricing_agent_worker.cpython-313.pyc
+            |-- product_repository.cpython-313.pyc
+            |-- relevance_filter.cpython-313.pyc
+            |-- rfp_scraper.cpython-313.pyc
+            |-- rfp_summarizer.cpython-313.pyc
+            |-- sales_agent.cpython-313.pyc
+            |-- sales_agent_worker.cpython-313.pyc
+            |-- scheduler.cpython-313.pyc
+            |-- simple_product_matcher.cpython-313.pyc
+            |-- state_manager.cpython-313.pyc
             |-- technical_agent.cpython-313.pyc
+            |-- technical_agent_worker.cpython-313.pyc
+            |-- url_monitor.cpython-313.pyc
+            |-- url_monitor_v2.cpython-313.pyc
+            |-- website_scanner.cpython-313.pyc
+            |-- workflow_trigger.cpython-313.pyc
             |-- __init__.cpython-313.pyc
     |-- api
+        |-- analytics.py
+        |-- auth.py
+        |-- main.py
+        |-- main_fast.py
+        |-- models.py
+        |-- rate_limit.py
         |-- routes
             |-- agents.py
+            |-- agent_logs.py
             |-- analytics.py
+            |-- challenge.py
+            |-- data.py
+            |-- file_upload.py
             |-- health.py
+            |-- oem_products.py
             |-- products.py
+            |-- products_crud.py
             |-- rfp.py
+            |-- rfp_analysis.py
+            |-- rfp_workflow.py
+            |-- website_scanner.py
+            |-- workflow.py
             |-- __init__.py
+            |-- __pycache__
+                |-- agents.cpython-313.pyc
+                |-- agent_logs.cpython-313.pyc
+                |-- analytics.cpython-313.pyc
+                |-- challenge.cpython-313.pyc
+                |-- data.cpython-313.pyc
+                |-- file_upload.cpython-313.pyc
+                |-- health.cpython-313.pyc
+                |-- oem_products.cpython-313.pyc
+                |-- products.cpython-313.pyc
+                |-- products_crud.cpython-313.pyc
+                |-- rfp.cpython-313.pyc
+                |-- rfp_analysis.cpython-313.pyc
+                |-- rfp_workflow.cpython-313.pyc
+                |-- website_scanner.cpython-313.pyc
+                |-- workflow.cpython-313.pyc
+                |-- __init__.cpython-313.pyc
         |-- schemas.py
+        |-- webhooks.py
         |-- __init__.py
+        |-- __pycache__
+            |-- analytics.cpython-313.pyc
+            |-- auth.cpython-313.pyc
+            |-- main.cpython-313.pyc
+            |-- main_fast.cpython-313.pyc
+            |-- models.cpython-313.pyc
+            |-- schemas.cpython-313.pyc
+            |-- __init__.cpython-313.pyc
+    |-- audit_trails
+        |-- TRAIL-20251216144817-WF-001.json
+    |-- backups
+        |-- db_backup_25491.6573525.db
+        |-- db_backup_27754.6552832.db
+        |-- db_backup_42689.8973892.db
+    |-- check_rfps.py
+    |-- check_schema.py
+    |-- chroma_db
+        |-- 0ec7805c-c801-49ff-82cb-3e593524ed61
+            |-- data_level0.bin
+            |-- header.bin
+            |-- length.bin
+            |-- link_lists.bin
+        |-- 135679f8-2c32-4873-a855-db3ff085a270
+            |-- data_level0.bin
+            |-- header.bin
+            |-- length.bin
+            |-- link_lists.bin
+        |-- 26ac47e6-c4e4-4706-9796-3d3a4a85f8eb
+            |-- data_level0.bin
+            |-- header.bin
+            |-- length.bin
+            |-- link_lists.bin
+        |-- 4a7a8d93-2ae5-484b-a04e-7572acc88cf6
+            |-- data_level0.bin
+            |-- header.bin
+            |-- length.bin
+            |-- link_lists.bin
+        |-- 6c0da662-38a1-4b1b-a62b-996a955344ca
+            |-- data_level0.bin
+            |-- header.bin
+            |-- length.bin
+            |-- link_lists.bin
+        |-- 83ffbcda-550e-449e-be3c-c293f9a04091
+            |-- data_level0.bin
+            |-- header.bin
+            |-- length.bin
+            |-- link_lists.bin
+        |-- 97b4a00e-ee11-435b-a5e6-614c7da20a35
+            |-- data_level0.bin
+            |-- header.bin
+            |-- length.bin
+            |-- link_lists.bin
+        |-- 99e23b7d-6d86-4a30-bffc-64d77b38a765
+            |-- data_level0.bin
+            |-- header.bin
+            |-- length.bin
+            |-- link_lists.bin
+        |-- a35b5e6f-c502-47b3-bf9b-87c6de035984
+            |-- data_level0.bin
+            |-- header.bin
+            |-- length.bin
+            |-- link_lists.bin
+        |-- a5b7c379-2fce-4da4-b0cd-deccaebdec51
+            |-- data_level0.bin
+            |-- header.bin
+            |-- length.bin
+            |-- link_lists.bin
+        |-- a84fac22-ddc0-4091-b8c1-9291441f8c76
+            |-- data_level0.bin
+            |-- header.bin
+            |-- length.bin
+            |-- link_lists.bin
+        |-- bbeb293f-f0e9-4b1d-95d7-45106b80e638
+            |-- data_level0.bin
+            |-- header.bin
+            |-- length.bin
+            |-- link_lists.bin
+        |-- chroma.sqlite3
+        |-- f0d109fe-57ba-46b9-b1ff-06cf9678c2b9
+            |-- data_level0.bin
+            |-- header.bin
+            |-- length.bin
+            |-- link_lists.bin
     |-- config
+        |-- logging_config.py
+        |-- security_config.py
         |-- settings.py
         |-- __init__.py
         |-- __pycache__
+            |-- logging_config.cpython-313.pyc
             |-- settings.cpython-313.pyc
             |-- __init__.cpython-313.pyc
     |-- data
+        |-- agent_state
+            |-- agent_state.json
+            |-- opportunities.json
+        |-- base_loader.py
+        |-- chromadb
+            |-- chroma.sqlite3
+        |-- data_quality.py
+        |-- historical_rfp_loader.py
         |-- pricing_calculator.py
+        |-- pricing_loader.py
         |-- product_loader.py
         |-- product_matcher.py
+        |-- standards_loader.py
+        |-- testing_data_loader.py
+        |-- validated_product_loader.py
         |-- vector_store.py
+        |-- vector_store_enhanced.py
         |-- __init__.py
         |-- __pycache__
+            |-- base_loader.cpython-313.pyc
+            |-- data_quality.cpython-313.pyc
+            |-- historical_rfp_loader.cpython-313.pyc
             |-- pricing_calculator.cpython-313.pyc
+            |-- pricing_loader.cpython-313.pyc
             |-- product_loader.cpython-313.pyc
             |-- product_matcher.cpython-313.pyc
+            |-- standards_loader.cpython-313.pyc
+            |-- testing_data_loader.cpython-313.pyc
+            |-- validated_product_loader.cpython-313.pyc
             |-- vector_store.cpython-313.pyc
+            |-- vector_store_enhanced.cpython-313.pyc
             |-- __init__.cpython-313.pyc
+    |-- data.db
+    |-- data_quality_report.json
     |-- db
         |-- database.py
+        |-- fmcg_enhanced.db
+        |-- migrations.py
         |-- models.py
+        |-- models_enhanced.py
+        |-- optimization.py
+        |-- product_models.py
         |-- __init__.py
         |-- __pycache__
             |-- database.cpython-313.pyc
+            |-- migrations.cpython-313.pyc
             |-- models.cpython-313.pyc
+            |-- models_enhanced.cpython-313.pyc
+            |-- optimization.cpython-313.pyc
+            |-- product_models.cpython-313.pyc
             |-- __init__.cpython-313.pyc
-    |-- main.py
-    |-- outputs
-    |-- PROJECT_STATUS.md
-    |-- README.md
-    |-- requirements-dev.txt
-    |-- requirements.txt
-    |-- scripts
-        |-- init_db.py
-        |-- __init__.py
-    |-- services
-        |-- rfp_processor.py
-        |-- rfp_scanner.py
-        |-- __init__.py
-    |-- tests
-        |-- conftest.py
-        |-- test_agents.py
-        |-- test_api.py
-    |-- utils
-        |-- logger.py
-        |-- standards_checker.py
+    |-- db_final.txt
+    |-- db_load.txt
+    |-- db_load2.txt
+    |-- db_load_v2.txt
+    |-- docker-compose.yml
+    |-- Dockerfile
+    |-- embeddings
+        |-- batch_embed_products.py
+        |-- embedding_service.py
+        |-- product_embedder.py
+        |-- vector_store.py
         |-- __init__.py
         |-- __pycache__
-            |-- logger.cpython-313.pyc
-            |-- standards_checker.cpython-313.pyc
+            |-- embedding_service.cpython-313.pyc
+            |-- product_embedder.cpython-313.pyc
+            |-- vector_store.cpython-313.pyc
             |-- __init__.cpython-313.pyc
+    |-- embedding_cache
+    |-- fix_statuses.py
+    |-- fix_statuses_async.py
+    |-- fmcg_enhanced.db
+    |-- frontend_build
+        |-- assets
+            |-- index-Bfk0llak.css
+            |-- index-CdZ2oAny.js
+        |-- index.html
+    |-- list_tables.py
+    |-- main.py
+    |-- matching
+        |-- confidence_calculator.py
+        |-- parameter_extractor.py
+        |-- score_aggregator.py
+        |-- specification_matcher.py
+        |-- spec_matcher.py
+        |-- weighted_scorer.py
+        |-- __init__.py
+        |-- __pycache__
+            |-- confidence_calculator.cpython-313.pyc
+            |-- parameter_extractor.cpython-313.pyc
+            |-- score_aggregator.cpython-313.pyc
+            |-- specification_matcher.cpython-313.pyc
+            |-- spec_matcher.cpython-313.pyc
+            |-- weighted_scorer.cpython-313.pyc
+            |-- __init__.cpython-313.pyc
+    |-- nginx.conf
+    |-- orchestrator_outputs
+        |-- audit_trails
+        |-- pdf_reports
+    |-- outputs
+        |-- rfp_processing
+            |-- batch_summary_20251217_181620.json
+        |-- rfp_responses
+            |-- RFP_102_Response_20251217_203503.pdf
+            |-- RFP_77_Response_20251217_191040.pdf
+            |-- RFP_90_Response_20251217_201905.pdf
+        |-- rfp_response_1_20251217_000035.json
+        |-- rfp_response_1_20251217_000035.pdf
+        |-- rfp_response_1_20251217_000117.json
+        |-- rfp_response_1_20251217_000117.pdf
+        |-- rfp_response_1_20251217_000117.xlsx
+        |-- rfp_response_1_20251217_000256.json
+        |-- rfp_response_1_20251217_000256.pdf
+        |-- rfp_response_1_20251217_000256.xlsx
+        |-- rfp_response_1_20251217_000548.json
+        |-- rfp_response_1_20251217_000548.pdf
+        |-- rfp_response_1_20251217_000548.xlsx
+        |-- rfp_response_1_20251217_000706.json
+        |-- rfp_response_1_20251217_000706.pdf
+        |-- rfp_response_1_20251217_000706.xlsx
+        |-- rfp_response_1_20251217_001000.json
+        |-- rfp_response_1_20251217_001000.pdf
+        |-- rfp_response_1_20251217_001000.xlsx
+        |-- rfp_response_1_20251217_001121.json
+        |-- rfp_response_1_20251217_001121.pdf
+        |-- rfp_response_1_20251217_001121.xlsx
+        |-- rfp_response_1_20251217_001558.json
+        |-- rfp_response_1_20251217_001558.pdf
+        |-- rfp_response_1_20251217_001558.xlsx
+        |-- rfp_response_1_20251217_001644.json
+        |-- rfp_response_1_20251217_001644.pdf
+        |-- rfp_response_1_20251217_001644.xlsx
+        |-- rfp_response_77_20251217_191545.pdf
+        |-- SAMPLE_RFP_MATCHING_OUTPUT.json
+    |-- pricing
+        |-- base_calculator.py
+        |-- bid_generator.py
+        |-- logistics_calculator.py
+        |-- margin_calculator.py
+        |-- pricing_engine.py
+        |-- product_pricer.py
+        |-- test_calculator.py
+        |-- __init__.py
+        |-- __pycache__
+            |-- base_calculator.cpython-313.pyc
+            |-- bid_generator.cpython-313.pyc
+            |-- logistics_calculator.cpython-313.pyc
+            |-- margin_calculator.cpython-313.pyc
+            |-- pricing_engine.cpython-313.pyc
+            |-- product_pricer.cpython-313.pyc
+            |-- test_calculator.cpython-313.pyc
+            |-- __init__.cpython-313.pyc
+    |-- prometheus.yml
+    |-- pyrightconfig.json
+    |-- pytest.ini
+    |-- README.md
+    |-- requirements-dev.txt
+    |-- requirements-production.txt
+    |-- requirements-test.txt
+    |-- requirements.txt
+    |-- rfp_parsing
+        |-- base_parser.py
+        |-- boq_extractor.py
+        |-- date_extractor.py
+        |-- multi_format.py
+        |-- ocr_handler.py
+        |-- pdf_extractor.py
+        |-- quality_metrics.py
+        |-- rfp_pipeline.py
+        |-- spec_parser.py
+        |-- testing_extractor.py
+        |-- __init__.py
+        |-- __pycache__
+            |-- base_parser.cpython-313.pyc
+            |-- boq_extractor.cpython-313.pyc
+            |-- date_extractor.cpython-313.pyc
+            |-- multi_format.cpython-313.pyc
+            |-- ocr_handler.cpython-313.pyc
+            |-- pdf_extractor.cpython-313.pyc
+            |-- quality_metrics.cpython-313.pyc
+            |-- rfp_pipeline.cpython-313.pyc
+            |-- spec_parser.cpython-313.pyc
+            |-- testing_extractor.cpython-313.pyc
+            |-- __init__.cpython-313.pyc
+    |-- rfp_system.db
+    |-- rfp_workflow_result_20251216_105022.json
+    |-- rfp_workflow_result_20251216_105313.json
+    |-- scripts
+        |-- add_matches_rfp14.py
+        |-- batch_process_all_rfps.py
+        |-- check_db.py
+        |-- direct_spec_matcher.py
+        |-- fix_empty_matches.py
+        |-- fix_rfp_matches_NOW.py
+        |-- fix_status_case.py
+        |-- generate_100_products.py
+        |-- init_db.py
+        |-- load_additional_products.py
+        |-- load_products_to_db.py
+        |-- load_products_to_db_v2.py
+        |-- match_all_rfps.py
+        |-- populate_vector_store.py
+        |-- quick_setup.py
+        |-- quick_verify.py
+        |-- scrape_and_load_rfps.py
+        |-- setup_database.py
+        |-- system_status.py
+        |-- test_data_loaders.py
+        |-- test_data_quality.py
+        |-- test_integration.py
+        |-- verify_setup.py
+        |-- __init__.py
+        |-- __pycache__
+            |-- setup_database.cpython-313.pyc
+            |-- __init__.cpython-313.pyc
+    |-- services
+        |-- analytics_service.py
+        |-- backup_service.py
+        |-- cache_service.py
+        |-- data_service.py
+        |-- error_tracking.py
+        |-- monitoring_service.py
+        |-- pdf_generator.py
+        |-- progress_tracker.py
+        |-- rfp_processor.py
+        |-- rfp_scanner.py
+        |-- vector_store_service.py
+        |-- __init__.py
+        |-- __pycache__
+            |-- analytics_service.cpython-313.pyc
+            |-- cache_service.cpython-313.pyc
+            |-- data_service.cpython-313.pyc
+            |-- error_tracking.cpython-313.pyc
+            |-- monitoring_service.cpython-313.pyc
+            |-- pdf_generator.cpython-313.pyc
+            |-- progress_tracker.cpython-313.pyc
+            |-- rfp_processor.cpython-313.pyc
+            |-- rfp_scanner.cpython-313.pyc
+            |-- vector_store_service.cpython-313.pyc
+            |-- __init__.cpython-313.pyc
+    |-- static
+        |-- app.js
+        |-- index.html
+    |-- tests
+        |-- conftest.py
+        |-- mock_data
+            |-- products.csv
+            |-- products.json
+            |-- specifications.json
+        |-- test_advanced_workflow.py
+        |-- test_agents.py
+        |-- test_api.py
+        |-- test_communication_system.py
+        |-- test_database.py
+        |-- test_data_loading.py
+        |-- test_embeddings.py
+        |-- test_enhanced_matching.py
+        |-- test_inter_agent_communication.py
+        |-- test_normalization.py
+        |-- test_rfp_workflow.py
+        |-- __init__.py
+        |-- __pycache__
+            |-- conftest.cpython-313-pytest-9.0.2.pyc
+            |-- test_advanced_workflow.cpython-313-pytest-9.0.2.pyc
+            |-- test_advanced_workflow.cpython-313.pyc
+            |-- test_agents.cpython-313-pytest-9.0.2.pyc
+            |-- test_api.cpython-313-pytest-9.0.2.pyc
+            |-- test_communication_system.cpython-313-pytest-9.0.2.pyc
+            |-- test_database.cpython-313-pytest-9.0.2.pyc
+            |-- test_data_loading.cpython-313-pytest-9.0.2.pyc
+            |-- test_embeddings.cpython-313-pytest-9.0.2.pyc
+            |-- test_enhanced_matching.cpython-313-pytest-9.0.2.pyc
+            |-- test_inter_agent_communication.cpython-313-pytest-9.0.2.pyc
+            |-- test_normalization.cpython-313-pytest-9.0.2.pyc
+            |-- test_rfp_workflow.cpython-313-pytest-9.0.2.pyc
+            |-- __init__.cpython-313.pyc
+    |-- uploads
+        |-- products
+        |-- rfps
+    |-- utils
+        |-- config_loader.py
+        |-- error_handlers.py
+        |-- logger.py
+        |-- specification_normalizer.py
+        |-- standards_checker.py
+        |-- standard_mapper.py
+        |-- text_processor.py
+        |-- unit_converter.py
+        |-- validation_helpers.py
+        |-- __init__.py
+        |-- __pycache__
+            |-- config_loader.cpython-313.pyc
+            |-- error_handlers.cpython-313.pyc
+            |-- logger.cpython-313.pyc
+            |-- specification_normalizer.cpython-313.pyc
+            |-- standards_checker.cpython-313.pyc
+            |-- standard_mapper.cpython-313.pyc
+            |-- text_processor.cpython-313.pyc
+            |-- unit_converter.cpython-313.pyc
+            |-- validation_helpers.cpython-313.pyc
+            |-- __init__.cpython-313.pyc
+    |-- verify_enhanced_matching.py
+    |-- verify_pricing_engine.py
+    |-- verify_system.py
+    |-- workflows
+        |-- mock_agents.py
+        |-- rfp_workflow.py
+        |-- workflow_extensions.py
+        |-- __init__.py
+        |-- __pycache__
+            |-- mock_agents.cpython-313.pyc
+            |-- rfp_workflow.cpython-313.pyc
+            |-- workflow_extensions.cpython-313.pyc
+            |-- __init__.cpython-313.pyc
+    |-- __pycache__
+        |-- main.cpython-313.pyc
+|-- fmcg_enhanced.db
 |-- FMEG_data
     |-- Havells
         |-- Havells_Air_Coolers.csv
@@ -1121,6 +1686,7 @@
     |-- package-lock.json
     |-- tech
         |-- .env
+        |-- .env.example
         |-- .gitignore
         |-- eslint.config.js
         |-- index.html
@@ -1132,27 +1698,69 @@
         |-- src
             |-- App.css
             |-- App.jsx
+            |-- App.jsx.backup
             |-- assets
                 |-- react.svg
             |-- components
                 |-- ActiveRFPs.jsx
+                |-- AddProductModal.jsx
+                |-- AlternativeProductSuggestions.jsx
                 |-- Analytics.jsx
                 |-- Drafts.jsx
+                |-- FileUploadWidget.jsx
+                |-- MatchedProductsDisplay.jsx
+                |-- MultiRFPProcessor.jsx
+                |-- OEMProductsBrowser.jsx
                 |-- Overview.jsx
+                |-- ProcessingProgressModal.jsx
+                |-- ProcessTimeComparison.jsx
+                |-- ProductSearchPanel.jsx
+                |-- QualityPreSubmissionScore.jsx
+                |-- RFPDetailsModal.jsx
+                |-- RFPDetailsModal_NEW.jsx
+                |-- RFPSelectionPanel.jsx
+                |-- RFPSubmissionForm.jsx
                 |-- Settings.jsx
+                |-- SpecMatchExplainer.jsx
+                |-- SpecMatchVisualization.jsx
+                |-- TestRequirementsSection.jsx
+                |-- UI.jsx
+                |-- WinRateAnalytics.jsx
+                |-- WorkflowDashboard.jsx
+                |-- WorkflowOrchestratorDashboard.jsx
+                |-- WorkflowResultsViewer.jsx
+                |-- WorkflowStreamViewer.jsx
+            |-- hooks
+                |-- useRFPApi.js
             |-- index.css
             |-- main.jsx
             |-- pages
+                |-- AnalyticsPage.jsx
+                |-- ChallengeFlow.jsx
                 |-- Dashboard.jsx
                 |-- DataImport.jsx
+                |-- EnhancedDashboard.jsx
                 |-- FinalDocument.jsx
+                |-- Login.jsx
+                |-- OrchestratorPage.jsx
                 |-- Processing.jsx
+                |-- ProcurementPortalsPage.jsx
+                |-- ProductsPage.jsx
                 |-- Review.jsx
                 |-- RFPDiscovery.jsx
+                |-- RFPProcessingPage.jsx
+                |-- RunHistory.jsx
+                |-- SettingsPage.jsx
+                |-- SystemManagement.jsx
+                |-- SystemOverview.jsx
+                |-- WebsiteMonitoring.jsx
             |-- services
                 |-- api.js
+                |-- oemApi.js
+                |-- rfpApi.js
         |-- tailwind.config.js
         |-- vite.config.js
+|-- outputs
 |-- README.md
 |-- RFPs
     |-- RFP1.pdf
@@ -1167,6 +1775,8 @@
     |-- RFP3.pdf
     |-- RFP8.pdf
     |-- RFP9.pdf
+    |-- sample_rfps
+        |-- README.md
 |-- testing_data
     |-- cable_testing_data_20251213_161518.xlsx
     |-- cable_testing_data_20251213_161519.json
@@ -1291,4 +1901,5 @@
     |-- wire_cable_standards_indian_standards_20251215_013650.csv
     |-- wire_cable_standards_international_standards_20251215_013650.csv
     |-- wire_cable_standards_pricing_20251215_013650.csv
-    |-- wire_cable_standards_tender_requ
+    |-- wire_cable_standards_tender_requirements_20251215_013650.csv
+|-- WORKFLOW.md

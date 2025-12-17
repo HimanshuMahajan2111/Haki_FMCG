@@ -16,6 +16,7 @@ class RFPStatus(enum.Enum):
     APPROVED = "approved"
     SUBMITTED = "submitted"
     REJECTED = "rejected"
+    CANCELLED = "cancelled"
 
 
 class AgentType(enum.Enum):
@@ -97,22 +98,61 @@ class Product(Base):
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 
+class WorkflowRun(Base):
+    """Workflow execution tracking."""
+    __tablename__ = "workflow_runs"
+    
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    workflow_id: Mapped[str] = mapped_column(String(100), unique=True, index=True)
+    rfp_id: Mapped[Optional[int]] = mapped_column(Integer, index=True)
+    customer_id: Mapped[Optional[str]] = mapped_column(String(100), index=True)
+    
+    # Execution status
+    status: Mapped[str] = mapped_column(String(50), index=True, default="pending")  # pending, in_progress, completed, failed
+    current_stage: Mapped[Optional[str]] = mapped_column(String(100))
+    
+    # Timing
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, index=True)
+    started_at: Mapped[Optional[datetime]] = mapped_column(DateTime)
+    completed_at: Mapped[Optional[datetime]] = mapped_column(DateTime, index=True)
+    duration_seconds: Mapped[Optional[float]] = mapped_column(Float)
+    
+    # Results
+    stage_results: Mapped[Optional[dict]] = mapped_column(JSON)  # Stage-wise results
+    final_output: Mapped[Optional[dict]] = mapped_column(JSON)
+    error_message: Mapped[Optional[str]] = mapped_column(Text)
+    
+    # Metrics
+    total_cost_usd: Mapped[Optional[float]] = mapped_column(Float)
+    quote_value_usd: Mapped[Optional[float]] = mapped_column(Float)
+    match_score: Mapped[Optional[float]] = mapped_column(Float)
+    confidence: Mapped[Optional[float]] = mapped_column(Float)
+    
+    # Outcome
+    won: Mapped[Optional[bool]] = mapped_column(Boolean)  # Whether deal was won
+    feedback: Mapped[Optional[str]] = mapped_column(Text)
+    
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+
 class AgentLog(Base):
     """Agent execution logs."""
     __tablename__ = "agent_logs"
     
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
-    rfp_id: Mapped[int] = mapped_column(Integer, index=True)
-    agent_type: Mapped[AgentType] = mapped_column(Enum(AgentType))
-    agent_name: Mapped[str] = mapped_column(String(100))
+    workflow_id: Mapped[Optional[str]] = mapped_column(String(100), index=True)
+    rfp_id: Mapped[Optional[int]] = mapped_column(Integer, index=True)
+    agent_type: Mapped[Optional[AgentType]] = mapped_column(Enum(AgentType))
+    agent_name: Mapped[str] = mapped_column(String(100), index=True)
     
     # Execution details
-    started_at: Mapped[datetime] = mapped_column(DateTime)
+    started_at: Mapped[datetime] = mapped_column(DateTime, index=True)
     completed_at: Mapped[Optional[datetime]] = mapped_column(DateTime)
     duration_seconds: Mapped[Optional[float]] = mapped_column(Float)
     
     # Results
-    status: Mapped[str] = mapped_column(String(50))
+    status: Mapped[str] = mapped_column(String(50), index=True)
+    action: Mapped[Optional[str]] = mapped_column(String(200), index=True)
     input_data: Mapped[Optional[dict]] = mapped_column(JSON)
     output_data: Mapped[Optional[dict]] = mapped_column(JSON)
     error_message: Mapped[Optional[str]] = mapped_column(Text)

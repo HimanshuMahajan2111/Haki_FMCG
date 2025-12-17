@@ -12,8 +12,17 @@ class ProductMatcher:
     
     def __init__(self):
         """Initialize product matcher."""
-        self.vector_store = VectorStore()
+        self.vector_store_service = None
+        self.data_service = None
         self.logger = logger.bind(component="ProductMatcher")
+    
+    def _get_services(self):
+        """Lazy load services to avoid circular imports."""
+        if self.vector_store_service is None:
+            from services.data_service import get_data_service
+            from services.vector_store_service import get_vector_store_service
+            self.vector_store_service = get_vector_store_service()
+            self.data_service = get_data_service()
     
     async def find_matches(
         self,
@@ -32,6 +41,8 @@ class ProductMatcher:
         # Build search query from requirement
         query = self._build_search_query(requirement)
         
+        self._get_services()  # Lazy load services
+        
         self.logger.info(
             "Searching for product matches",
             requirement=requirement.get("item_name"),
@@ -39,14 +50,27 @@ class ProductMatcher:
         )
         
         # Search vector store
-        results = await self.vector_store.search(
+        results = await self.vector_store_service.search_products(
             query=query,
             limit=top_k
         )
         
-        # Enhance results with similarity scores
+        # Enhance results with similarity scores and pricing
         matches = []
         for result in results:
+            # Get full product details from data service
+            product_code = result.get("product_code")
+            if product_code:
+                product = await self.data_service.get_product_by_id(product_code)
+                if product:
+                    result.update(product)
+                
+                # Get pricing
+                pricing = await self.data_service.get_pricing_for_product(product_code)
+                if pricing:
+                    result["pricing"] = pricing
+            
+            # Calculate enhanced similarity score
             match = {
                 **result,
                 "similarity_score": self._calculate_similarity_score(

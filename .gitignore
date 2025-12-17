@@ -41,6 +41,10 @@ backend/venv/
 .env.local
 .env.*.local
 
+# Local runtime state / secrets
+backend/agents/technical_agent/memory/
+backend/data/agent_state/
+
 # Logs
 *.log
 logs/
@@ -61,11 +65,43 @@ htmlcov/
 
 # ChromaDB
 backend/data/chromadb/
+backend/chroma_db/
+
+# Embeddings/cache
+backend/embedding_cache/
+backend/embeddings/
+
+# Uploads
+backend/uploads/
 
 # Outputs
 backend/outputs/
+outputs/
 *.docx
 *.xlsx
+
+# Generated frontend build output checked into backend
+backend/frontend_build/
+
+# Audit trails (generated)
+backend/audit_trails/
+
+# Generated reports
+backend/data_quality_report.json
+backend/rfp_workflow_result_*.json
+
+# Local DB/debug dumps
+backend/db_*.txt
+backend/db_load*.txt
+
+# Local test artifacts
+backend/test_output*.txt
+backend/db_output*.txt
+backend/workflow_test_results.txt
+backend/final_test.txt
+backend/test_final_run.txt
+backend/test_real_data.txt
+backend/test_repo.txt
 
 # Frontend
 Frontend/tech/node_modules/

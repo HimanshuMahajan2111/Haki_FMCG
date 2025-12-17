@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RFP AI System - Analytics Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .status-bar {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #4caf50;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .tab:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .tab.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .metric-card h3 {
+            color: #666;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .metric-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .metric-subtitle {
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-container h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.5s;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .data-table th {
+            background: #f5f5f5;
+            color: #667eea;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            letter-spacing: 1px;
+        }
+
+        .data-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .badge-warning {
+            background: #fff3e0;
+            color: #e65100;
+        }
+
+        .badge-error {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .badge-info {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: white;
+            font-size: 1.2em;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #d0d0d0;
+        }
+
+        .real-time-updates {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 350px;
+            z-index: 1000;
+        }
+
+        .real-time-updates h3 {
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        .update-item {
+            padding: 10px;
+            border-left: 3px solid #667eea;
+            margin-bottom: 10px;
+            background: #f5f5f5;
+            border-radius: 4px;
+        }
+
+        .update-time {
+            font-size: 0.8em;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 RFP AI System</h1>
+            <p>Comprehensive Analytics & Monitoring Dashboard</p>
+            <div class="status-bar">
+                <div class="status-indicator">
+                    <span class="status-dot"></span>
+                    System Online
+                </div>
+                <div class="status-indicator" id="lastUpdate">
+                    Last Updated: Loading...
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-tabs">
+            <div class="tab active" onclick="switchTab('overview')">📊 Overview</div>
+            <div class="tab" onclick="switchTab('rfp')">📄 RFP Processing</div>
+            <div class="tab" onclick="switchTab('analytics')">📈 Analytics</div>
+            <div class="tab" onclick="switchTab('performance')">⚡ Performance</div>
+            <div class="tab" onclick="switchTab('agents')">🤖 Agents</div>
+            <div class="tab" onclick="switchTab('api')">🔌 API Docs</div>
+        </div>
+
+        <div id="overview" class="tab-content active">
+            <div class="dashboard-grid" id="overviewMetrics">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    Loading dashboard data...
+                </div>
+            </div>
+        </div>
+
+        <div id="rfp" class="tab-content">
+            <div class="chart-container">
+                <h2>RFP Processing Status</h2>
+                <div id="rfpContent">Loading...</div>
+            </div>
+        </div>
+
+        <div id="analytics" class="tab-content">
+            <div class="chart-container">
+                <h2>Match Accuracy & Win Rates</h2>
+                <div id="analyticsContent">Loading...</div>
+            </div>
+        </div>
+
+        <div id="performance" class="tab-content">
+            <div class="chart-container">
+                <h2>System Performance Metrics</h2>
+                <div id="performanceContent">Loading...</div>
+            </div>
+        </div>
+
+        <div id="agents" class="tab-content">
+            <div class="chart-container">
+                <h2>Agent Performance</h2>
+                <div id="agentsContent">Loading...</div>
+            </div>
+        </div>
+
+        <div id="api" class="tab-content">
+            <div class="chart-container">
+                <h2>API Documentation & Testing</h2>
+                <div id="apiContent">Loading...</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="real-time-updates" id="realTimeUpdates" style="display: none;">
+        <h3>📡 Real-Time Updates</h3>
+        <div id="updatesList"></div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

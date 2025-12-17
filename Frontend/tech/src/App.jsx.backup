@@ -1,0 +1,311 @@
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
+import Dashboard from './pages/Dashboard';
+import RFPDiscovery from './pages/RFPDiscovery';
+import Processing from './pages/Processing';
+import Review from './pages/Review';
+import FinalDocument from './pages/FinalDocument';
+import DataImport from './pages/DataImport';
+import SystemManagement from './pages/SystemManagement';
+import { FileText, Search, Settings, Cpu, CheckCircle, Upload, Wrench, BarChart3, Package, Activity, Home, Globe, History, Zap } from 'lucide-react';
+
+// Import RAF AI pages
+import Login from './pages/Login';
+import EnhancedDashboard from './pages/EnhancedDashboard';
+import RunHistory from './pages/RunHistory';
+import WebsiteMonitoring from './pages/WebsiteMonitoring';
+import SettingsPage from './pages/SettingsPage';
+
+// Import new critical components
+import SpecMatchExplainer from './components/SpecMatchExplainer';
+import AlternativeProductSuggestions from './components/AlternativeProductSuggestions';
+import QualityPreSubmissionScore from './components/QualityPreSubmissionScore';
+
+import './App.css';
+
+const TabbedLayout = () => {
+  const tabs = [
+    { path: '/overview', label: 'Overview', icon: '🏠' },
+    { path: '/active-rfps', label: 'Active RFPs', icon: '📄' },
+    { path: '/drafts', label: 'Drafts', icon: '📑' },
+    { path: '/analytics', label: 'Analytics', icon: '📈' },
+    { path: '/settings', label: 'Settings', icon: '⚙️' },
+  ];
+
+  return (
+    <div className="site-wrapper">
+
+      <nav className="side-nav-bar">
+        <div className="nav-logo">
+          <span>RFP Dashboard</span>
+        </div>
+
+        <div className="tab-links-container">
+          {tabs.map((tab) => (
+            <NavLink
+              key={tab.path}
+              to={tab.path}
+              className={({ isActive }) => (isActive ? 'side-tab-link active' : 'side-tab-link')}
+            >
+              <span className="tab-icon">{tab.icon}</span>
+              {tab.label}
+            </NavLink>
+          ))}
+        </div>
+      </nav>
+
+      <div className="main-content-area">
+
+        <header className="top-content-header">
+          <div className="user-actions">
+            <button className="icon-button notification-button">🔔</button>
+            <button className="icon-button profile-button">👤</button>
+          </div>
+        </header>
+
+        <div className="tab-content-container">
+          <Outlet />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+function App() {
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [systemStatus, setSystemStatus] = useState({ online: true, activeWorkflows: 0 });
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    // Check if user is logged in
+    const user = localStorage.getItem('user');
+    setIsAuthenticated(!!user);
+
+    const fetchSystemStatus = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/health');
+        if (response.ok) {
+          const data = await response.json();
+          setSystemStatus({
+            online: data.status === 'healthy',
+            activeWorkflows: data.active_workflows || 0
+          });
+        }
+      } catch (error) {
+        setSystemStatus({ online: false, activeWorkflows: 0 });
+      }
+    };
+
+    fetchSystemStatus();
+    const interval = setInterval(fetchSystemStatus, 10000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Protected Route Component
+  const ProtectedRoute = ({ children }) => {
+    const user = localStorage.getItem('user');
+    return user ? children : <Navigate to="/login" replace />;
+  };
+
+  return (
+    <Router>
+      <div className="flex flex-col h-screen bg-gradient-to-br from-dark-900 to-dark-800">
+        {/* Top Navigation Bar */}
+        <header className="bg-dark-900/80 backdrop-blur-xl border-b border-dark-700/50 shadow-lg z-50">
+          <div className="px-6 py-4">
+            <div className="flex items-center justify-between">
+              {/* Logo */}
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-secondary-600 rounded-xl flex items-center justify-center shadow-lg">
+                    <span className="text-2xl">🤖</span>
+                  </div>
+                  <div>
+                    <h1 className="font-bold text-lg text-white">RFP AI System</h1>
+                    <p className="text-xs text-gray-400">Intelligent Automation Platform</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* User Actions */}
+              <div className="flex items-center gap-3">
+                <span className="text-sm text-gray-400">Admin</span>
+                <button 
+                  onClick={() => setSidebarOpen(!sidebarOpen)}
+                  className="p-2 text-gray-400 hover:text-white hover:bg-dark-800 rounded-lg transition-all"
+                >
+                  <Settings size={20} />
+                </button>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <div className="flex flex-1 overflow-hidden">
+          {/* Sidebar */}
+          <aside className={`${sidebarOpen ? 'w-72' : 'w-20'} bg-dark-900/50 backdrop-blur-xl border-r border-dark-700/50 transition-all duration-300 flex flex-col shadow-2xl`}>
+            {/* Quick Stats */}
+            {sidebarOpen && (
+              <div className="p-4 border-b border-dark-700/50">
+                <div className="bg-dark-800/50 rounded-lg p-4">
+                  <h3 className="text-xs text-gray-400 mb-2">Quick Stats</h3>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-300">Active RFPs</span>
+                      <span className="text-sm font-bold text-primary-400">12</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-300">Processing</span>
+                      <span className="text-sm font-bold text-yellow-400">5</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-300">Completed</span>
+                      <span className="text-sm font-bold text-green-400">47</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            {/* Navigation */}
+            <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+              <SidebarLink to="/" icon={<Home size={20} />} label="Dashboard" collapsed={!sidebarOpen} />
+              <SidebarLink to="/discovery" icon={<Search size={20} />} label="RFP Discovery" collapsed={!sidebarOpen} />
+              <SidebarLink to="/processing" icon={<Cpu size={20} />} label="Processing" collapsed={!sidebarOpen} />
+              <SidebarLink to="/review" icon={<CheckCircle size={20} />} label="Review" collapsed={!sidebarOpen} />
+              <SidebarLink to="/document" icon={<FileText size={20} />} label="Final Document" collapsed={!sidebarOpen} />
+              
+              <div className="my-4 border-t border-dark-700/50"></div>
+              
+              <SidebarLink to="/history" icon={<History size={20} />} label="Run History" collapsed={!sidebarOpen} />
+              <SidebarLink to="/monitoring" icon={<Globe size={20} />} label="Website Monitor" collapsed={!sidebarOpen} />
+              <SidebarLink to="/analytics" icon={<BarChart3 size={20} />} label="Analytics" collapsed={!sidebarOpen} />
+              <SidebarLink to="/orchestrator" icon={<Activity size={20} />} label="Orchestrator" collapsed={!sidebarOpen} />
+              
+              <div className="my-4 border-t border-dark-700/50"></div>
+              
+              <SidebarLink to="/products" icon={<Package size={20} />} label="Products" collapsed={!sidebarOpen} />
+              <SidebarLink to="/import" icon={<Upload size={20} />} label="Data Import" collapsed={!sidebarOpen} />
+              <SidebarLink to="/settings" icon={<Settings size={20} />} label="Settings" collapsed={!sidebarOpen} />
+              <SidebarLink to="/system" icon={<Wrench size={20} />} label="System" collapsed={!sidebarOpen} />
+            </nav>
+
+            {/* Sidebar Toggle */}
+            <div className="p-4 border-t border-dark-700/50">
+              <button 
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 text-dark-300 hover:text-white hover:bg-dark-800/50 rounded-xl transition-all duration-200"
+              >
+                {sidebarOpen ? (
+                  <>
+                    <span className="transform rotate-180">→</span>
+                    <span>Collapse</span>
+                  </>
+                ) : (
+                  <span>→</span>
+                )}
+              </button>
+            </div>
+          </aside>
+
+          {/* Main Content Area */}
+          <main className="flex-1 overflow-y-auto bg-gradient-to-br from-dark-800 to-dark-900">
+            <div className="w-full h-full">
+              <Routes>
+                {/* Public Routes - Updated */}
+                <Route path="/login" element={<Login />} />
+                
+                {/* Protected Routes */}
+                <Route path="/" element={<ProtectedRoute><EnhancedDashboard /></ProtectedRoute>} />
+                <Route path="/dashboard-old" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                <Route path="/discovery" element={<ProtectedRoute><RFPDiscovery /></ProtectedRoute>} />
+                <Route path="/processing" element={<ProtectedRoute><Processing /></ProtectedRoute>} />
+                <Route path="/review" element={<ProtectedRoute><Review /></ProtectedRoute>} />
+                <Route path="/document" element={<ProtectedRoute><FinalDocument /></ProtectedRoute>} />
+                <Route path="/history" element={<ProtectedRoute><RunHistory /></ProtectedRoute>} />
+                <Route path="/monitoring" element={<ProtectedRoute><WebsiteMonitoring /></ProtectedRoute>} />
+                <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
+                <Route path="/import" element={<ProtectedRoute><DataImport /></ProtectedRoute>} />
+                <Route path="/system" element={<ProtectedRoute><SystemManagement /></ProtectedRoute>} />
+                <Route path="/analytics" element={
+                  <ProtectedRoute>
+                    <div className="space-y-6 p-6">
+                      <h1 className="text-3xl font-bold text-white">Analytics Dashboard</h1>
+                    </div>
+                  </ProtectedRoute>
+                } />
+                <Route path="/products" element={
+                  <ProtectedRoute>
+                    <div className="space-y-6 p-6">
+                      <h1 className="text-3xl font-bold text-white">Products</h1>
+                    </div>
+                  </ProtectedRoute>
+                } />
+                <Route path="/orchestrator" element={
+                  <ProtectedRoute>
+                    <div className="space-y-6 p-6">
+                      <h1 className="text-3xl font-bold text-white">Workflow Orchestrator</h1>
+                    </div>
+                  </ProtectedRoute>
+                } />
+              </Routes>
+            </div>
+          </main>
+        </div>
+
+        {/* Footer / Status Bar */}
+        <footer className="bg-dark-900/80 backdrop-blur-xl border-t border-dark-700/50 px-6 py-3">
+          <div className="flex items-center justify-between text-sm">
+            <div className="flex items-center gap-6">
+              <div className="flex items-center gap-2">
+                <span className={`w-2 h-2 rounded-full ${systemStatus.online ? 'bg-green-400 animate-pulse-slow' : 'bg-red-400'}`}></span>
+                <span className="text-gray-400">
+                  System Status: <span className={systemStatus.online ? 'text-green-400' : 'text-red-400'}>
+                    {systemStatus.online ? 'Online' : 'Offline'}
+                  </span>
+                </span>
+              </div>
+              <div className="text-gray-400">
+                Active Workflows: <span className="text-white font-semibold">{systemStatus.activeWorkflows}</span>
+              </div>
+              <div className="text-gray-400">
+                Version: <span className="text-white">1.0.0</span>
+              </div>
+            </div>
+            <div className="text-gray-400">
+              © 2024 RFP AI System. All rights reserved.
+            </div>
+          </div>
+        </footer>
+      </div>
+    </Router>
+  );
+}
+
+function SidebarLink({ to, icon, label, collapsed }) {
+  const location = window.location;
+  const isActive = location.pathname === to;
+  
+  return (
+    <Link 
+      to={to}
+      className={`group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
+        isActive 
+          ? 'bg-gradient-to-r from-primary-600 to-primary-500 text-white shadow-lg shadow-primary-500/30' 
+          : 'text-dark-300 hover:text-white hover:bg-dark-800/50'
+      }`}
+    >
+      <span className={`${isActive ? 'text-white' : 'text-dark-400 group-hover:text-primary-400'} transition-colors`}>
+        {icon}
+      </span>
+      {!collapsed && (
+        <span className="text-sm font-medium">{label}</span>
+      )}
+      {!collapsed && isActive && (
+        <span className="ml-auto w-2 h-2 bg-white rounded-full animate-pulse"></span>
+      )}
+    </Link>
+  );
+}
+
+export default App;

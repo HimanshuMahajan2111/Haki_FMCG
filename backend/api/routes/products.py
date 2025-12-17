@@ -7,6 +7,7 @@ from sqlalchemy import select, func
 from db.database import get_db
 from db.models import Product
 from api.schemas import ProductSearchRequest
+from services import get_data_service, get_vector_store_service
 
 router = APIRouter()
 
@@ -17,7 +18,7 @@ async def get_products(
     limit: int = Query(50, ge=1, le=100),
     category: Optional[str] = None,
     brand: Optional[str] = None,
-    db: AsyncSession = Depends(get_db)
+    search: Optional[str] = None
 ):
     """Get products with pagination and filtering.
     
@@ -26,50 +27,34 @@ async def get_products(
         limit: Maximum number of records to return
         category: Filter by category
         brand: Filter by brand
-        db: Database session
+        search: Search query
         
     Returns:
-        List of products
+        List of products with pagination info
     """
-    query = select(Product)
+    data_service = get_data_service()
     
-    if category:
-        query = query.where(Product.category == category)
-    if brand:
-        query = query.where(Product.brand == brand)
+    # Get products from data service
+    products = await data_service.get_products(
+        skip=skip,
+        limit=limit,
+        category=category,
+        brand=brand,
+        search=search
+    )
     
-    query = query.offset(skip).limit(limit)
-    
-    result = await db.execute(query)
-    products = result.scalars().all()
-    
-    # Get total count
-    count_query = select(func.count(Product.id))
-    if category:
-        count_query = count_query.where(Product.category == category)
-    if brand:
-        count_query = count_query.where(Product.brand == brand)
-    
-    total_result = await db.execute(count_query)
-    total = total_result.scalar()
+    # Get total count (without pagination)
+    all_products = await data_service.get_products(
+        category=category,
+        brand=brand,
+        search=search,
+        limit=100000
+    )
+    total = len(all_products)
     
     return {
         "data": {
-            "products": [
-                {
-                    "id": p.id,
-                    "brand": p.brand,
-                    "category": p.category,
-                    "product_code": p.product_code,
-                    "product_name": p.product_name,
-                    "specifications": p.specifications,
-                    "mrp": p.mrp,
-                    "selling_price": p.selling_price,
-                    "certifications": p.certifications,
-                    "standard": p.standard,
-                }
-                for p in products
-            ],
+            "products": products,
             "total": total,
             "skip": skip,
             "limit": limit,
@@ -78,25 +63,19 @@ async def get_products(
 
 
 @router.post("/search")
-async def search_products(
-    request: ProductSearchRequest,
-    db: AsyncSession = Depends(get_db)
-):
+async def search_products(request: ProductSearchRequest):
     """Search products using semantic search.
     
     Args:
         request: Search request with query
-        db: Database session
         
     Returns:
-        Matching products
+        Matching products from vector store
     """
-    from data.vector_store import VectorStore
-    
-    vector_store = VectorStore()
+    vector_store_service = get_vector_store_service()
     
     # Perform semantic search
-    results = await vector_store.search(
+    results = await vector_store_service.search_products(
         query=request.query,
         limit=request.limit
     )
@@ -105,51 +84,78 @@ async def search_products(
         "data": {
             "query": request.query,
             "results": results,
+            "count": len(results)
         }
     }
 
 
+@router.get("/categories")
+async def get_categories():
+    """Get list of all product categories.
+    
+    Returns:
+        List of categories
+    """
+    data_service = get_data_service()
+    categories = await data_service.get_product_categories()
+    
+    return {
+        "data": {
+            "categories": categories,
+            "count": len(categories)
+        }
+    }
+
+
+@router.get("/brands")
+async def get_brands():
+    """Get list of all product brands.
+    
+    Returns:
+        List of brands
+    """
+    data_service = get_data_service()
+    brands = await data_service.get_product_brands()
+    
+    return {
+        "data": {
+            "brands": brands,
+            "count": len(brands)
+        }
+    }
+
+
+@router.get("/statistics")
+async def get_statistics():
+    """Get product statistics.
+    
+    Returns:
+        Statistics about products
+    """
+    data_service = get_data_service()
+    stats = await data_service.get_statistics()
+    
+    return {
+        "data": stats
+    }
+
+
 @router.get("/{product_id}")
-async def get_product(
-    product_id: int,
-    db: AsyncSession = Depends(get_db)
-):
-    """Get product details by ID.
+async def get_product(product_id: str):
+    """Get product details by ID or product code.
     
     Args:
-        product_id: Product ID
-        db: Database session
+        product_id: Product ID or product code
         
     Returns:
         Product details
     """
-    query = select(Product).where(Product.id == product_id)
-    result = await db.execute(query)
-    product = result.scalar_one_or_none()
+    data_service = get_data_service()
+    product = await data_service.get_product_by_id(product_id)
     
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
     
     return {
-        "data": {
-            "id": product.id,
-            "brand": product.brand,
-            "category": product.category,
-            "sub_category": product.sub_category,
-            "product_code": product.product_code,
-            "product_name": product.product_name,
-            "model_name": product.model_name,
-            "specifications": product.specifications,
-            "mrp": product.mrp,
-            "selling_price": product.selling_price,
-            "dealer_price": product.dealer_price,
-            "certifications": product.certifications,
-            "bis_registration": product.bis_registration,
-            "standard": product.standard,
-            "hsn_code": product.hsn_code,
-            "warranty_years": product.warranty_years,
-            "country_of_origin": product.country_of_origin,
-            "image_url": product.image_url,
-            "datasheet_url": product.datasheet_url,
-        }
+        "data": product
     }

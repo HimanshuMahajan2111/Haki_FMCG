@@ -1,0 +1,19 @@
+{
+  "exclude": [
+    "**/.coveragerc",
+    "**/*.ini",
+    "**/*.cfg",
+    "**/node_modules",
+    "**/__pycache__",
+    "**/.*"
+  ],
+  "ignore": [
+    ".coveragerc",
+    "*.ini",
+    "*.cfg"
+  ],
+  "reportMissingImports": true,
+  "reportMissingTypeStubs": false,
+  "pythonVersion": "3.11",
+  "typeCheckingMode": "basic"
+}

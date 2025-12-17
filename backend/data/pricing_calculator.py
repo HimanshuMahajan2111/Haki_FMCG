@@ -10,7 +10,14 @@ class PricingCalculator:
     
     def __init__(self):
         """Initialize pricing calculator."""
+        self.data_service = None
         self.logger = logger.bind(component="PricingCalculator")
+    
+    def _get_data_service(self):
+        """Lazy load data service to avoid circular imports."""
+        if self.data_service is None:
+            from services.data_service import get_data_service
+            self.data_service = get_data_service()
     
     async def calculate_line_item(
         self,
@@ -28,8 +35,16 @@ class PricingCalculator:
         Returns:
             Pricing breakdown
         """
-        # Get base price
-        base_price = self._get_base_price(product, strategy)
+        self._get_data_service()  # Lazy load service
+        
+        # Get pricing data from data service if available
+        product_code = product.get("product_code")
+        pricing_data = None
+        if product_code:
+            pricing_data = await self.data_service.get_pricing_for_product(product_code)
+        
+        # Get base price from pricing data or product
+        base_price = self._get_base_price(product, strategy, pricing_data)
         
         # Calculate discount based on quantity
         discount_percent = self._calculate_discount(quantity, base_price)
@@ -41,8 +56,16 @@ class PricingCalculator:
         line_total = discounted_price * quantity
         
         # Additional costs
-        testing_costs = self._calculate_testing_costs(product, quantity)
-        certification_costs = self._calculate_certification_costs(product)
+        testing_costs = await self._calculate_testing_costs(product, quantity)
+        certification_costs = await self._calculate_certification_costs(product)
+        
+        self.logger.info(
+            "Calculated line item pricing",
+            product_code=product_code,
+            quantity=quantity,
+            base_price=base_price,
+            line_total=line_total
+        )
         
         return {
             "base_price": base_price,
@@ -58,21 +81,28 @@ class PricingCalculator:
     def _get_base_price(
         self,
         product: Dict[str, Any],
-        strategy: str
+        strategy: str,
+        pricing_data: Dict[str, Any] = None
     ) -> float:
         """Get base price based on strategy.
         
         Args:
             product: Product dictionary
             strategy: Pricing strategy
+            pricing_data: Optional pricing data from data service
             
         Returns:
             Base price
         """
-        # Try different price fields
-        selling_price = product.get("selling_price")
-        dealer_price = product.get("dealer_price")
-        mrp = product.get("mrp")
+        # Try to get prices from pricing data first, then product
+        if pricing_data:
+            selling_price = pricing_data.get("selling_price") or product.get("selling_price")
+            dealer_price = pricing_data.get("dealer_price") or product.get("dealer_price")
+            mrp = pricing_data.get("mrp") or product.get("mrp")
+        else:
+            selling_price = product.get("selling_price")
+            dealer_price = product.get("dealer_price")
+            mrp = product.get("mrp")
         
         if strategy == "competitive":
             # Use selling price or 85% of MRP
@@ -108,12 +138,12 @@ class PricingCalculator:
         else:
             return 0.0
     
-    def _calculate_testing_costs(
+    async def _calculate_testing_costs(
         self,
         product: Dict[str, Any],
         quantity: int
     ) -> float:
-        """Calculate testing costs.
+        """Calculate testing costs using data from testing data loader.
         
         Args:
             product: Product dictionary
@@ -122,25 +152,39 @@ class PricingCalculator:
         Returns:
             Testing cost
         """
-        # Standard testing costs for electrical products
-        # Typically ₹500-1000 per batch
+        self._get_data_service()  # Lazy load service
+        
+        # Get testing data from data service
+        testing_data = await self.data_service.get_testing_data()
         
         category = product.get("category", "").lower()
         
+        # Look for applicable tests
+        estimated_cost = 0.0
+        
         if "cable" in category or "wire" in category:
-            # Cable testing required
-            return 500.0
+            # Look for type tests in testing data
+            type_tests = testing_data.get("type_tests", [])
+            if type_tests:
+                # Get average cost from test data
+                test_costs = [t.get("estimated_cost", 500) for t in type_tests if t.get("estimated_cost")]
+                if test_costs:
+                    estimated_cost = sum(test_costs) / len(test_costs)
+                else:
+                    estimated_cost = 500.0
+            else:
+                estimated_cost = 500.0
         elif quantity > 100:
             # Bulk order testing
-            return 800.0
-        else:
-            return 0.0
+            estimated_cost = 800.0
+        
+        return estimated_cost
     
-    def _calculate_certification_costs(
+    async def _calculate_certification_costs(
         self,
         product: Dict[str, Any]
     ) -> float:
-        """Calculate certification costs.
+        """Calculate certification costs using data from standards.
         
         Args:
             product: Product dictionary
@@ -148,11 +192,20 @@ class PricingCalculator:
         Returns:
             Certification cost
         """
+        self._get_data_service()  # Lazy load service
+        
+        # Get testing data for certifications
+        testing_data = await self.data_service.get_testing_data()
+        certifications_list = testing_data.get("certifications", [])
+        
         # Check if certifications needed
         certifications = product.get("certifications", "")
         
         if "BIS" in certifications or "ISI" in certifications:
-            # BIS/ISI certification documentation
+            # Look for BIS certification cost in data
+            for cert in certifications_list:
+                if "BIS" in cert.get("test_name", "") or "ISI" in cert.get("test_name", ""):
+                    return cert.get("estimated_cost", 300.0)
             return 300.0
         else:
             return 0.0

@@ -39,13 +39,22 @@ async def get_db() -> AsyncGenerator[AsyncSession, None]:
             await session.close()
 
 
-async def init_db():
-    """Initialize database tables."""
-    logger.info("Initializing database")
+async def init_db(use_enhanced: bool = True):
+    """Initialize database tables.
+    
+    Args:
+        use_enhanced: If True, use enhanced schema with relationships (recommended)
+    """
+    logger.info("Initializing database", use_enhanced=use_enhanced)
     
     async with engine.begin() as conn:
-        # Import all models here to ensure they're registered
-        from db import models  # noqa
+        # Import models to ensure they're registered
+        if use_enhanced:
+            from db import models_enhanced  # noqa
+            logger.info("Using enhanced schema")
+        else:
+            from db import models  # noqa
+            logger.info("Using basic schema")
         
         # Create all tables
         await conn.run_sync(Base.metadata.create_all)

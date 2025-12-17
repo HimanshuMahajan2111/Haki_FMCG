@@ -209,3 +209,37 @@ body {
 .start-upload-button:hover:not(:disabled) {
     background-color: #00a4b3;
 }
+
+/* Engaging Animations for Progress Modal */
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+@keyframes pulse-slow {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+@keyframes fadeInUp {
+    from { 
+        opacity: 0; 
+        transform: translateY(20px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+.animate-shimmer {
+    animation: shimmer 2s infinite;
+}
+
+.animate-pulse-slow {
+    animation: pulse-slow 2s infinite;
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.5s ease-out;
+}

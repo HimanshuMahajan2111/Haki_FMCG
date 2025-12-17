@@ -1,0 +1,11 @@
+brand,category,product_name,voltage_rating,current_rating,conductor_size,insulation_type,standards,mrp,selling_price,dealer_price,gst_rate,hsn_code
+Havells,Cables,HRFR Cable 1.5 sq mm,1100V,16A,1.5 sq mm,HRFR,"IS 694, IEC 60227",2500.00,2000.00,1750.00,18.0,8544
+Polycab,Wires,FR Wire 2.5 sq mm,1.1kV,20A,2.5 sq mm,FR PVC,IEC 60227,1800.00,1500.00,1350.00,18.0,8544
+KEI,Switchgear,MCB 32A C-Curve 4P,230V,32A,,,IS 8828,450.00,380.00,340.00,18.0,8536
+Havells,Motors,3 Phase Induction Motor 5HP,415V,,,,IS 12615,15500.00,13000.00,12000.00,18.0,8501
+Polycab,Lighting,LED Bulb 9W Cool White,230V,,,,IS 16102,150.00,120.00,100.00,12.0,8539
+Finolex,Cables,Armoured Cable 4C x 10 sq mm,1.1kV,40A,10 sq mm,PVC,IS 1554,12500.00,10500.00,9500.00,18.0,8544
+RR Kabel,Wires,House Wire 1.0 sq mm,1100V,10A,1.0 sq mm,PVC,IS 694,800.00,650.00,580.00,18.0,8544
+Havells,Fans,Ceiling Fan 1200mm,230V,,,,IS 374,2500.00,2100.00,1900.00,12.0,8414
+KEI,Cables,XLPE Cable 3C x 240 sq mm,11kV,400A,240 sq mm,XLPE,IS 7098,95000.00,82000.00,75000.00,18.0,8544
+Polycab,Switchgear,RCCB 40A 30mA,230V,40A,,,IEC 61008,1800.00,1500.00,1350.00,18.0,8536

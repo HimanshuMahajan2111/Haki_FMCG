@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     api_port: int = 8000
     
     # Database
-    database_url: str
+    database_url: str = "sqlite+aiosqlite:///fmcg_enhanced.db"
     database_pool_size: int = 10
     database_max_overflow: int = 20
     
@@ -48,7 +48,7 @@ class Settings(BaseSettings):
     output_dir: Path = Path("./outputs")
     
     # Security
-    secret_key: str
+    secret_key: str = "dev-secret-key-change-in-production-12345678"
     access_token_expire_minutes: int = 30
     algorithm: str = "HS256"
     

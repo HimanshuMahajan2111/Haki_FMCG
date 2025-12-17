@@ -1,0 +1,140 @@
+# Docker Compose for Production Deployment
+version: '3.8'
+
+services:
+  # Main Application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rfp_ai_app
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=production
+      - DATABASE_URL=sqlite:///./db/rfp_system.db
+      - REDIS_URL=redis://redis:6379
+      - LOG_LEVEL=INFO
+      - ENABLE_MONITORING=true
+      - ENABLE_CACHING=true
+    volumes:
+      - ./db:/app/db
+      - ./logs:/app/logs
+      - ./backups:/app/backups
+      - ./chroma_db:/app/chroma_db
+    depends_on:
+      - redis
+    restart: unless-stopped
+    networks:
+      - rfp_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: rfp_ai_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    networks:
+      - rfp_network
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: rfp_ai_nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+      - ./logs/nginx:/var/log/nginx
+    depends_on:
+      - app
+    restart: unless-stopped
+    networks:
+      - rfp_network
+
+  # Prometheus Monitoring
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: rfp_ai_prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=30d'
+    restart: unless-stopped
+    networks:
+      - rfp_network
+
+  # Grafana Dashboard
+  grafana:
+    image: grafana/grafana:latest
+    container_name: rfp_ai_grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin123
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources:ro
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+    networks:
+      - rfp_network
+
+  # Worker for Background Tasks
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rfp_ai_worker
+    command: python -m celery -A services.worker worker --loglevel=info
+    environment:
+      - ENVIRONMENT=production
+      - REDIS_URL=redis://redis:6379
+      - DATABASE_URL=sqlite:///./db/rfp_system.db
+    volumes:
+      - ./db:/app/db
+      - ./logs:/app/logs
+      - ./chroma_db:/app/chroma_db
+    depends_on:
+      - redis
+      - app
+    restart: unless-stopped
+    networks:
+      - rfp_network
+
+networks:
+  rfp_network:
+    driver: bridge
+
+volumes:
+  redis_data:
+    driver: local
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
