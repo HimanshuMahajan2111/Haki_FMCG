@@ -103,6 +103,9 @@ backend/test_final_run.txt
 backend/test_real_data.txt
 backend/test_repo.txt
 
+# Large local-only verification artifacts
+backend/agents/communication/verify_features_ascii.py
+
 # Frontend
 Frontend/tech/node_modules/
 Frontend/tech/dist/
